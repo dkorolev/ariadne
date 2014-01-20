@@ -1,5 +1,6 @@
 # ariadne
 
+```npm install ariadne```
 
 ## Motivation
 
@@ -25,4 +26,6 @@ A node.js frontend and wrapper for Thrift backends.
 
 ## Usecase
 
-Originally designed to be used with ```npm install overlog``` log storer and fetcher and C++ clients based on https://github.com/dkorolev/marvin.
+Originally designed to be used with:
+* ```npm install overlog``` log storer and fetcher, and
+* C++ clients based on https://github.com/dkorolev/marvin.
