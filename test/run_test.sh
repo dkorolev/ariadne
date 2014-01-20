@@ -1,6 +1,13 @@
 #!/bin/bash
 #
 # Unit test for Ariadne. Tests parsing input from stdin and HTTP.
+#
+# To run a test against a C++ Thrift backend:
+# (cd c++; make)
+# ./run_test.sh c++/cpp_thrift_server
+
+RUN_SERVER=${1:-node ariande_server.js}
+echo -e "Server command: \e[1;34m$RUN_SERVER\e[0m"
 
 TMPDIR=$(mktemp -d)
 echo -e "Working directory: \e[1;34m$TMPDIR\e[0m"

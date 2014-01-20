@@ -6,94 +6,6 @@
 var Thrift = require('thrift').Thrift;
 
 var ttypes = module.exports = {};
-Status = module.exports.Status = function(args) {
-  this.status = 'OK';
-  this.recent = null;
-  if (args) {
-    if (args.status !== undefined) {
-      this.status = args.status;
-    }
-    if (args.recent !== undefined) {
-      this.recent = args.recent;
-    }
-  }
-};
-Status.prototype = {};
-Status.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-      if (ftype == Thrift.Type.STRING) {
-        this.status = input.readString();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      case 2:
-      if (ftype == Thrift.Type.LIST) {
-        var _size0 = 0;
-        var _rtmp34;
-        this.recent = [];
-        var _etype3 = 0;
-        _rtmp34 = input.readListBegin();
-        _etype3 = _rtmp34.etype;
-        _size0 = _rtmp34.size;
-        for (var _i5 = 0; _i5 < _size0; ++_i5)
-        {
-          var elem6 = null;
-          elem6 = input.readString();
-          this.recent.push(elem6);
-        }
-        input.readListEnd();
-      } else {
-        input.skip(ftype);
-      }
-      break;
-      default:
-        input.skip(ftype);
-    }
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-Status.prototype.write = function(output) {
-  output.writeStructBegin('Status');
-  if (this.status !== null && this.status !== undefined) {
-    output.writeFieldBegin('status', Thrift.Type.STRING, 1);
-    output.writeString(this.status);
-    output.writeFieldEnd();
-  }
-  if (this.recent !== null && this.recent !== undefined) {
-    output.writeFieldBegin('recent', Thrift.Type.LIST, 2);
-    output.writeListBegin(Thrift.Type.STRING, this.recent.length);
-    for (var iter7 in this.recent)
-    {
-      if (this.recent.hasOwnProperty(iter7))
-      {
-        iter7 = this.recent[iter7];
-        output.writeString(iter7);
-      }
-    }
-    output.writeListEnd();
-    output.writeFieldEnd();
-  }
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
 AddArguments = module.exports.AddArguments = function(args) {
   this.left_hand_side = null;
   this.right_hand_side = null;
@@ -312,6 +224,94 @@ PostResult.prototype.write = function(output) {
   if (this.count_so_far !== null && this.count_so_far !== undefined) {
     output.writeFieldBegin('count_so_far', Thrift.Type.I32, 1);
     output.writeI32(this.count_so_far);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+Status = module.exports.Status = function(args) {
+  this.status = 'OK';
+  this.recent = null;
+  if (args) {
+    if (args.status !== undefined) {
+      this.status = args.status;
+    }
+    if (args.recent !== undefined) {
+      this.recent = args.recent;
+    }
+  }
+};
+Status.prototype = {};
+Status.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.status = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.LIST) {
+        var _size0 = 0;
+        var _rtmp34;
+        this.recent = [];
+        var _etype3 = 0;
+        _rtmp34 = input.readListBegin();
+        _etype3 = _rtmp34.etype;
+        _size0 = _rtmp34.size;
+        for (var _i5 = 0; _i5 < _size0; ++_i5)
+        {
+          var elem6 = null;
+          elem6 = input.readString();
+          this.recent.push(elem6);
+        }
+        input.readListEnd();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+Status.prototype.write = function(output) {
+  output.writeStructBegin('Status');
+  if (this.status !== null && this.status !== undefined) {
+    output.writeFieldBegin('status', Thrift.Type.STRING, 1);
+    output.writeString(this.status);
+    output.writeFieldEnd();
+  }
+  if (this.recent !== null && this.recent !== undefined) {
+    output.writeFieldBegin('recent', Thrift.Type.LIST, 2);
+    output.writeListBegin(Thrift.Type.STRING, this.recent.length);
+    for (var iter7 in this.recent)
+    {
+      if (this.recent.hasOwnProperty(iter7))
+      {
+        iter7 = this.recent[iter7];
+        output.writeString(iter7);
+      }
+    }
+    output.writeListEnd();
     output.writeFieldEnd();
   }
   output.writeFieldStop();
