@@ -1,7 +1,7 @@
 var ariadne = require('../lib/ariadne.js');
 
 process.on('uncaughtException', function(error) {
-  console.error(error);
+  console.trace(error);
   process.exit(1);
 });
 
@@ -22,7 +22,10 @@ server.addStdinHandler(
 server.addStdinHandler(
   function(line) {
     if (line.trim().toUpperCase() === 'STOP') {
-      process.exit(0);
+      server.tearDown(function() {
+        process.exit(0);
+      });
+      return true;
     }
   });
 
@@ -32,4 +35,6 @@ server.addStdinHandler(
     return true;
   });
 
-server.run();
+server.run(function() {
+  console.log('STARTED');
+});

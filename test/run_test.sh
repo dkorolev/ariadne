@@ -24,11 +24,18 @@ touch $GOLDEN
 
 make
 
-echo -n 'Starting Ariadne client: '
+echo 'Starting Ariadne client and waiting for it to be up and running.'
 tail -f $INPUT | node ariadne_client.js > $OUTPUT &
 CLIENT_PID=$!
-echo -e "\e[1;32mPID $CLIENT_PID\e[0m"
 
+echo 'STARTED' >> $GOLDEN
+while ! tail -n 1 $OUTPUT | $DIFF - $GOLDEN >/dev/null ; do
+  echo 'Waiting for the client to start...'
+  sleep 0.2 
+done
+
+echo -n 'Started Ariadne client: '
+echo -e "\e[1;32mPID $CLIENT_PID\e[0m"
 
 echo -n 'Testing 1+1 via stdin: .'
 echo '1 1' >> $INPUT
