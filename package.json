@@ -1,0 +1,48 @@
+{
+   "name": "ariadne",
+   "version": "0.0.1",
+   "description": "A node.js frontend wrapper for Thrift backends.",
+   "homepage": "https://github.com/dkorolev/ariadne",
+   "repository": {
+      "url": "git@github.com:dkorolev/ariadne.git",
+      "type": "git"
+   },
+   "bugs": {
+      "url": "https://github.com/dkorolev/ariadne/issues"
+   },
+   "engines": {
+      "node": ">= 0.8.x"
+   },
+   "author": {
+      "email": "dmitry.korolev@gmail.com",
+      "url": "http://dimakorolev.com/",
+      "name": "Dima Korolev"
+   },
+   "licenses": [
+      {
+         "type": "MIT"
+      }
+   ],
+   "license": "MIT",
+   "tags": [
+      "frontend",
+      "wrapper",
+      "backend",
+      "thrift"
+   ],
+   "keywords": [
+      "frontend",
+      "wrapper",
+      "backend",
+      "thrift"
+   ],
+   "main": "lib/ariadne.js",
+   "scripts": {
+       "test": "(cd test; ./run_test.sh)"
+   },
+   "dependencies": {
+      "commander": "*",
+      "underscore": "*",
+      "thrift": "*"
+   }
+}
