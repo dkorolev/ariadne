@@ -4,8 +4,6 @@
 #include <mutex>
 #include <thread>
 
-#include <boost/format.hpp>
-
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/server/TSimpleServer.h>
 #include <thrift/transport/TServerSocket.h>
