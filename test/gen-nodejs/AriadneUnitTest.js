@@ -8,7 +8,7 @@ var Thrift = require('thrift').Thrift;
 var ttypes = require('./api_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
-AriadneUnitTest_api_add_args = function(args) {
+AriadneUnitTest_ariadne_add_args = function(args) {
   this.arguments = null;
   if (args) {
     if (args.arguments !== undefined) {
@@ -16,8 +16,8 @@ AriadneUnitTest_api_add_args = function(args) {
     }
   }
 };
-AriadneUnitTest_api_add_args.prototype = {};
-AriadneUnitTest_api_add_args.prototype.read = function(input) {
+AriadneUnitTest_ariadne_add_args.prototype = {};
+AriadneUnitTest_ariadne_add_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -50,8 +50,8 @@ AriadneUnitTest_api_add_args.prototype.read = function(input) {
   return;
 };
 
-AriadneUnitTest_api_add_args.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_api_add_args');
+AriadneUnitTest_ariadne_add_args.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_add_args');
   if (this.arguments !== null && this.arguments !== undefined) {
     output.writeFieldBegin('arguments', Thrift.Type.STRUCT, 1);
     this.arguments.write(output);
@@ -62,7 +62,7 @@ AriadneUnitTest_api_add_args.prototype.write = function(output) {
   return;
 };
 
-AriadneUnitTest_api_add_result = function(args) {
+AriadneUnitTest_ariadne_add_result = function(args) {
   this.success = null;
   if (args) {
     if (args.success !== undefined) {
@@ -70,8 +70,8 @@ AriadneUnitTest_api_add_result = function(args) {
     }
   }
 };
-AriadneUnitTest_api_add_result.prototype = {};
-AriadneUnitTest_api_add_result.prototype.read = function(input) {
+AriadneUnitTest_ariadne_add_result.prototype = {};
+AriadneUnitTest_ariadne_add_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -104,8 +104,8 @@ AriadneUnitTest_api_add_result.prototype.read = function(input) {
   return;
 };
 
-AriadneUnitTest_api_add_result.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_api_add_result');
+AriadneUnitTest_ariadne_add_result.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_add_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -116,7 +116,7 @@ AriadneUnitTest_api_add_result.prototype.write = function(output) {
   return;
 };
 
-AriadneUnitTest_api_post_args = function(args) {
+AriadneUnitTest_ariadne_post_args = function(args) {
   this.arguments = null;
   if (args) {
     if (args.arguments !== undefined) {
@@ -124,8 +124,8 @@ AriadneUnitTest_api_post_args = function(args) {
     }
   }
 };
-AriadneUnitTest_api_post_args.prototype = {};
-AriadneUnitTest_api_post_args.prototype.read = function(input) {
+AriadneUnitTest_ariadne_post_args.prototype = {};
+AriadneUnitTest_ariadne_post_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -158,8 +158,8 @@ AriadneUnitTest_api_post_args.prototype.read = function(input) {
   return;
 };
 
-AriadneUnitTest_api_post_args.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_api_post_args');
+AriadneUnitTest_ariadne_post_args.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_post_args');
   if (this.arguments !== null && this.arguments !== undefined) {
     output.writeFieldBegin('arguments', Thrift.Type.STRUCT, 1);
     this.arguments.write(output);
@@ -170,7 +170,7 @@ AriadneUnitTest_api_post_args.prototype.write = function(output) {
   return;
 };
 
-AriadneUnitTest_api_post_result = function(args) {
+AriadneUnitTest_ariadne_post_result = function(args) {
   this.success = null;
   if (args) {
     if (args.success !== undefined) {
@@ -178,8 +178,8 @@ AriadneUnitTest_api_post_result = function(args) {
     }
   }
 };
-AriadneUnitTest_api_post_result.prototype = {};
-AriadneUnitTest_api_post_result.prototype.read = function(input) {
+AriadneUnitTest_ariadne_post_result.prototype = {};
+AriadneUnitTest_ariadne_post_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -212,8 +212,8 @@ AriadneUnitTest_api_post_result.prototype.read = function(input) {
   return;
 };
 
-AriadneUnitTest_api_post_result.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_api_post_result');
+AriadneUnitTest_ariadne_post_result.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_post_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -224,10 +224,10 @@ AriadneUnitTest_api_post_result.prototype.write = function(output) {
   return;
 };
 
-AriadneUnitTest_api_status_args = function(args) {
+AriadneUnitTest_ariadne_status_args = function(args) {
 };
-AriadneUnitTest_api_status_args.prototype = {};
-AriadneUnitTest_api_status_args.prototype.read = function(input) {
+AriadneUnitTest_ariadne_status_args.prototype = {};
+AriadneUnitTest_ariadne_status_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -245,14 +245,14 @@ AriadneUnitTest_api_status_args.prototype.read = function(input) {
   return;
 };
 
-AriadneUnitTest_api_status_args.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_api_status_args');
+AriadneUnitTest_ariadne_status_args.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_status_args');
   output.writeFieldStop();
   output.writeStructEnd();
   return;
 };
 
-AriadneUnitTest_api_status_result = function(args) {
+AriadneUnitTest_ariadne_status_result = function(args) {
   this.success = null;
   if (args) {
     if (args.success !== undefined) {
@@ -260,8 +260,8 @@ AriadneUnitTest_api_status_result = function(args) {
     }
   }
 };
-AriadneUnitTest_api_status_result.prototype = {};
-AriadneUnitTest_api_status_result.prototype.read = function(input) {
+AriadneUnitTest_ariadne_status_result.prototype = {};
+AriadneUnitTest_ariadne_status_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -294,8 +294,8 @@ AriadneUnitTest_api_status_result.prototype.read = function(input) {
   return;
 };
 
-AriadneUnitTest_api_status_result.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_api_status_result');
+AriadneUnitTest_ariadne_status_result.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_status_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
     this.success.write(output);
@@ -306,10 +306,10 @@ AriadneUnitTest_api_status_result.prototype.write = function(output) {
   return;
 };
 
-AriadneUnitTest_api_stop_args = function(args) {
+AriadneUnitTest_ariadne_stop_args = function(args) {
 };
-AriadneUnitTest_api_stop_args.prototype = {};
-AriadneUnitTest_api_stop_args.prototype.read = function(input) {
+AriadneUnitTest_ariadne_stop_args.prototype = {};
+AriadneUnitTest_ariadne_stop_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -327,17 +327,17 @@ AriadneUnitTest_api_stop_args.prototype.read = function(input) {
   return;
 };
 
-AriadneUnitTest_api_stop_args.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_api_stop_args');
+AriadneUnitTest_ariadne_stop_args.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_stop_args');
   output.writeFieldStop();
   output.writeStructEnd();
   return;
 };
 
-AriadneUnitTest_api_stop_result = function(args) {
+AriadneUnitTest_ariadne_stop_result = function(args) {
 };
-AriadneUnitTest_api_stop_result.prototype = {};
-AriadneUnitTest_api_stop_result.prototype.read = function(input) {
+AriadneUnitTest_ariadne_stop_result.prototype = {};
+AriadneUnitTest_ariadne_stop_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -355,8 +355,8 @@ AriadneUnitTest_api_stop_result.prototype.read = function(input) {
   return;
 };
 
-AriadneUnitTest_api_stop_result.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_api_stop_result');
+AriadneUnitTest_ariadne_stop_result.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_stop_result');
   output.writeFieldStop();
   output.writeStructEnd();
   return;
@@ -369,23 +369,23 @@ AriadneUnitTestClient = exports.Client = function(output, pClass) {
     this._reqs = {};
 };
 AriadneUnitTestClient.prototype = {};
-AriadneUnitTestClient.prototype.api_add = function(arguments, callback) {
+AriadneUnitTestClient.prototype.ariadne_add = function(arguments, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
-  this.send_api_add(arguments);
+  this.send_ariadne_add(arguments);
 };
 
-AriadneUnitTestClient.prototype.send_api_add = function(arguments) {
+AriadneUnitTestClient.prototype.send_ariadne_add = function(arguments) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('api_add', Thrift.MessageType.CALL, this.seqid);
-  var args = new AriadneUnitTest_api_add_args();
+  output.writeMessageBegin('ariadne_add', Thrift.MessageType.CALL, this.seqid);
+  var args = new AriadneUnitTest_ariadne_add_args();
   args.arguments = arguments;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-AriadneUnitTestClient.prototype.recv_api_add = function(input,mtype,rseqid) {
+AriadneUnitTestClient.prototype.recv_ariadne_add = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -394,32 +394,32 @@ AriadneUnitTestClient.prototype.recv_api_add = function(input,mtype,rseqid) {
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new AriadneUnitTest_api_add_result();
+  var result = new AriadneUnitTest_ariadne_add_result();
   result.read(input);
   input.readMessageEnd();
 
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('api_add failed: unknown result');
+  return callback('ariadne_add failed: unknown result');
 };
-AriadneUnitTestClient.prototype.api_post = function(arguments, callback) {
+AriadneUnitTestClient.prototype.ariadne_post = function(arguments, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
-  this.send_api_post(arguments);
+  this.send_ariadne_post(arguments);
 };
 
-AriadneUnitTestClient.prototype.send_api_post = function(arguments) {
+AriadneUnitTestClient.prototype.send_ariadne_post = function(arguments) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('api_post', Thrift.MessageType.CALL, this.seqid);
-  var args = new AriadneUnitTest_api_post_args();
+  output.writeMessageBegin('ariadne_post', Thrift.MessageType.CALL, this.seqid);
+  var args = new AriadneUnitTest_ariadne_post_args();
   args.arguments = arguments;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-AriadneUnitTestClient.prototype.recv_api_post = function(input,mtype,rseqid) {
+AriadneUnitTestClient.prototype.recv_ariadne_post = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -428,31 +428,31 @@ AriadneUnitTestClient.prototype.recv_api_post = function(input,mtype,rseqid) {
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new AriadneUnitTest_api_post_result();
+  var result = new AriadneUnitTest_ariadne_post_result();
   result.read(input);
   input.readMessageEnd();
 
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('api_post failed: unknown result');
+  return callback('ariadne_post failed: unknown result');
 };
-AriadneUnitTestClient.prototype.api_status = function(callback) {
+AriadneUnitTestClient.prototype.ariadne_status = function(callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
-  this.send_api_status();
+  this.send_ariadne_status();
 };
 
-AriadneUnitTestClient.prototype.send_api_status = function() {
+AriadneUnitTestClient.prototype.send_ariadne_status = function() {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('api_status', Thrift.MessageType.CALL, this.seqid);
-  var args = new AriadneUnitTest_api_status_args();
+  output.writeMessageBegin('ariadne_status', Thrift.MessageType.CALL, this.seqid);
+  var args = new AriadneUnitTest_ariadne_status_args();
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-AriadneUnitTestClient.prototype.recv_api_status = function(input,mtype,rseqid) {
+AriadneUnitTestClient.prototype.recv_ariadne_status = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -461,31 +461,31 @@ AriadneUnitTestClient.prototype.recv_api_status = function(input,mtype,rseqid) {
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new AriadneUnitTest_api_status_result();
+  var result = new AriadneUnitTest_ariadne_status_result();
   result.read(input);
   input.readMessageEnd();
 
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('api_status failed: unknown result');
+  return callback('ariadne_status failed: unknown result');
 };
-AriadneUnitTestClient.prototype.api_stop = function(callback) {
+AriadneUnitTestClient.prototype.ariadne_stop = function(callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
-  this.send_api_stop();
+  this.send_ariadne_stop();
 };
 
-AriadneUnitTestClient.prototype.send_api_stop = function() {
+AriadneUnitTestClient.prototype.send_ariadne_stop = function() {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('api_stop', Thrift.MessageType.CALL, this.seqid);
-  var args = new AriadneUnitTest_api_stop_args();
+  output.writeMessageBegin('ariadne_stop', Thrift.MessageType.CALL, this.seqid);
+  var args = new AriadneUnitTest_ariadne_stop_args();
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-AriadneUnitTestClient.prototype.recv_api_stop = function(input,mtype,rseqid) {
+AriadneUnitTestClient.prototype.recv_ariadne_stop = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -494,7 +494,7 @@ AriadneUnitTestClient.prototype.recv_api_stop = function(input,mtype,rseqid) {
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new AriadneUnitTest_api_stop_result();
+  var result = new AriadneUnitTest_ariadne_stop_result();
   result.read(input);
   input.readMessageEnd();
 
@@ -518,52 +518,52 @@ AriadneUnitTestProcessor.prototype.process = function(input, output) {
   }
 }
 
-AriadneUnitTestProcessor.prototype.process_api_add = function(seqid, input, output) {
-  var args = new AriadneUnitTest_api_add_args();
+AriadneUnitTestProcessor.prototype.process_ariadne_add = function(seqid, input, output) {
+  var args = new AriadneUnitTest_ariadne_add_args();
   args.read(input);
   input.readMessageEnd();
-  this._handler.api_add(args.arguments, function (err, result) {
-    var result = new AriadneUnitTest_api_add_result((err != null ? err : {success: result}));
-    output.writeMessageBegin("api_add", Thrift.MessageType.REPLY, seqid);
+  this._handler.ariadne_add(args.arguments, function (err, result) {
+    var result = new AriadneUnitTest_ariadne_add_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("ariadne_add", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();
   })
 }
 
-AriadneUnitTestProcessor.prototype.process_api_post = function(seqid, input, output) {
-  var args = new AriadneUnitTest_api_post_args();
+AriadneUnitTestProcessor.prototype.process_ariadne_post = function(seqid, input, output) {
+  var args = new AriadneUnitTest_ariadne_post_args();
   args.read(input);
   input.readMessageEnd();
-  this._handler.api_post(args.arguments, function (err, result) {
-    var result = new AriadneUnitTest_api_post_result((err != null ? err : {success: result}));
-    output.writeMessageBegin("api_post", Thrift.MessageType.REPLY, seqid);
+  this._handler.ariadne_post(args.arguments, function (err, result) {
+    var result = new AriadneUnitTest_ariadne_post_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("ariadne_post", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();
   })
 }
 
-AriadneUnitTestProcessor.prototype.process_api_status = function(seqid, input, output) {
-  var args = new AriadneUnitTest_api_status_args();
+AriadneUnitTestProcessor.prototype.process_ariadne_status = function(seqid, input, output) {
+  var args = new AriadneUnitTest_ariadne_status_args();
   args.read(input);
   input.readMessageEnd();
-  this._handler.api_status(function (err, result) {
-    var result = new AriadneUnitTest_api_status_result((err != null ? err : {success: result}));
-    output.writeMessageBegin("api_status", Thrift.MessageType.REPLY, seqid);
+  this._handler.ariadne_status(function (err, result) {
+    var result = new AriadneUnitTest_ariadne_status_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("ariadne_status", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();
   })
 }
 
-AriadneUnitTestProcessor.prototype.process_api_stop = function(seqid, input, output) {
-  var args = new AriadneUnitTest_api_stop_args();
+AriadneUnitTestProcessor.prototype.process_ariadne_stop = function(seqid, input, output) {
+  var args = new AriadneUnitTest_ariadne_stop_args();
   args.read(input);
   input.readMessageEnd();
-  this._handler.api_stop(function (err, result) {
-    var result = new AriadneUnitTest_api_stop_result((err != null ? err : {success: result}));
-    output.writeMessageBegin("api_stop", Thrift.MessageType.REPLY, seqid);
+  this._handler.ariadne_stop(function (err, result) {
+    var result = new AriadneUnitTest_ariadne_stop_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("ariadne_stop", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();

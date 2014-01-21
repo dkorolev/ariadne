@@ -20,18 +20,18 @@ const int FLAGS_port = 9090;  // Avoid depending on gflags in this test.
 
 class Impl : virtual public AriadneUnitTestIf {
  public:
-  void api_add(AddResult& result, const AddArguments& arguments) {
+  void ariadne_add(AddResult& result, const AddArguments& arguments) {
     result.sum = arguments.left_hand_side + arguments.right_hand_side;
   }
-  void api_post(PostResult& result, const PostArguments& arguments) {
+  void ariadne_post(PostResult& result, const PostArguments& arguments) {
     std::lock_guard<std::mutex> lock(mutex_);
     messages_.push_back(arguments.message);
   }
-  void api_status(Status& status) {
+  void ariadne_status(Status& status) {
     std::lock_guard<std::mutex> lock(mutex_);
     status.recent.push_back("blah");
   }
-  void api_stop() {
+  void ariadne_stop() {
     exit(0);
   }
 

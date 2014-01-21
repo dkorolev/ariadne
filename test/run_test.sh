@@ -48,6 +48,7 @@ if ! echo '{"stdin_lines":1,"http_requests":1,"http_requests_by_method":{"GET":1
   echo STOP >> $INPUT
   exit 1
 fi
+echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Testing UNRECOGNIZED via stdin: .'
@@ -119,6 +120,6 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -e '\e[1;32mPASS\e[0m'
-rm -rf $TMPDIR
+//rm -rf $TMPDIR
 
 exit 0
