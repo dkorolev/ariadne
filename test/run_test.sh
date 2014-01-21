@@ -120,6 +120,6 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -e '\e[1;32mPASS\e[0m'
-//rm -rf $TMPDIR
+rm -rf $TMPDIR
 
 exit 0
