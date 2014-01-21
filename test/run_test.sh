@@ -7,6 +7,7 @@
 # ./run_test.sh c++/cpp_thrift_server
 
 RUN_SERVER=${1:-node ariande_server.js}
+TEST_PORT=9091
 echo -e "Server command: \e[1;34m$RUN_SERVER\e[0m"
 
 TMPDIR=$(mktemp -d)
@@ -24,15 +25,12 @@ touch $GOLDEN
 
 make
 
-echo 'Starting Ariadne client and waiting for it to be up and running.'
-tail -f $INPUT | node ariadne_client.js > $OUTPUT &
+#tail -f $INPUT | node ariadne_client.js --startup_delay_ms 5000 > $OUTPUT &
+tail -f $INPUT | node ariadne_client.js -w $TEST_PORT --startup_delay_ms 0 > $OUTPUT &
 CLIENT_PID=$!
-
 echo 'STARTED' >> $GOLDEN
-while ! tail -n 1 $OUTPUT | $DIFF - $GOLDEN >/dev/null ; do
-  echo 'Waiting for the client to start...'
-  sleep 0.2 
-done
+while ! $DIFF $GOLDEN $OUTPUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
+echo
 
 echo -n 'Started Ariadne client: '
 echo -e "\e[1;32mPID $CLIENT_PID\e[0m"
@@ -49,6 +47,52 @@ echo 'foo' >> $INPUT
 echo 'UNRECOGNIZED' >> $GOLDEN
 while ! $DIFF $GOLDEN $OUTPUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
 echo -e ' \e[1;32mOK\e[0m'
+
+
+echo -n 'Testing /demo endpoint: '
+if ! echo '{"test":"passed","url":"http://google.com"}' | $DIFF - <(curl -s localhost:$TEST_PORT/demo) ; then
+  echo -e '\e[1;31mFAIL\e[0m'
+  echo STOP >> $INPUT
+  exit 1
+fi
+echo -e '\e[1;32mOK\e[0m'
+
+
+echo -n 'Testing /demo endpoint in HTML format: '
+cat <<EOF >$GOLDEN
+<pre>{
+    "test": "passed",
+    "url": "<a href='http://google.com'>http://google.com</a>"
+}</pre>
+EOF
+if ! $DIFF $GOLDEN <(curl -s -H "Accept: text/html" localhost:$TEST_PORT/demo) ; then
+  echo -e '\e[1;31mFAIL\e[0m'
+  echo STOP >> $INPUT
+  exit 1
+fi
+echo -e '\e[1;32mOK\e[0m'
+
+
+echo -n 'Testing /beauty endpoint: '
+if ! echo '{"beautifier":"unittest","caption":"Beauty","value":42}' | $DIFF - <(curl -s localhost:$TEST_PORT/beauty) ; then
+  echo -e '\e[1;31mFAIL\e[0m'
+  echo STOP >> $INPUT
+  exit 1
+fi
+echo -e '\e[1;32mOK\e[0m'
+
+
+echo -n 'Testing /beauty endpoint in HTML format: '
+cat <<EOF >$GOLDEN
+<h1>Beauty</h1>
+<p>42</p>
+EOF
+if ! $DIFF $GOLDEN <(curl -s -H "Accept: text/html" localhost:$TEST_PORT/beauty) ; then
+  echo -e '\e[1;31mFAIL\e[0m'
+  echo STOP >> $INPUT
+  exit 1
+fi
+echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Stopping Ariadne client: '
