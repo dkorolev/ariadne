@@ -1,7 +1,5 @@
 'use strict';
 
-var _ = require('underscore');
-var assert = require('assert');
 var ariadne = require('../lib/ariadne.js');
 
 process.on('uncaughtException', function(error) {
