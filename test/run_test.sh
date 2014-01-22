@@ -6,7 +6,7 @@
 # (cd c++; make)
 # ./run_test.sh c++/cpp_thrift_server
 
-RUN_SERVER=${1:-node ariande_server.js}
+RUN_SERVER=${1:-node thrift_server.js}
 TEST_PORT=9091
 echo -e "Server command: \e[1;34m$RUN_SERVER\e[0m"
 
@@ -25,8 +25,8 @@ touch $GOLDEN
 
 make
 
-#tail -f $INPUT | node ariadne_client.js -w $TEST_PORT --connect_to_existing > $OUTPUT &
-tail -f $INPUT | node ariadne_client.js -w $TEST_PORT --server_command="c++/cpp_thrift_server" > $OUTPUT &
+tail -f $INPUT | node ariadne_client.js -w $TEST_PORT --server_command="$RUN_SERVER" > $OUTPUT &
+
 CLIENT_PID=$!
 echo 'STARTED' >> $GOLDEN
 while ! $DIFF $GOLDEN $OUTPUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
