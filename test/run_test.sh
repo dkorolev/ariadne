@@ -18,18 +18,20 @@ DIFF="diff -w"
 INPUT=$TMPDIR/pipe
 mkfifo $INPUT
 
-OUTPUT=$TMPDIR/output
+STDOUT=$TMPDIR/stdout
+STDERR=$TMPDIR/stderr
 GOLDEN=$TMPDIR/golden
-touch $OUTPUT
+touch $STDOUT
+touch $STDERR
 touch $GOLDEN
 
 make
 
-tail -f $INPUT | node ariadne_client.js -w $TEST_PORT --server_command="$RUN_SERVER" > $OUTPUT &
-
+tail -f $INPUT | node ariadne_client.js -w $TEST_PORT --server_command="$RUN_SERVER" >$STDOUT 2>$STDERR &
 CLIENT_PID=$!
+
 echo 'STARTED' >> $GOLDEN
-while ! $DIFF $GOLDEN $OUTPUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
+while ! $DIFF $GOLDEN $STDOUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
 echo
 
 echo -n 'Started Ariadne client: '
@@ -38,7 +40,7 @@ echo -e "\e[1;32mPID $CLIENT_PID\e[0m"
 echo -n 'Testing 1+1 via stdin: .'
 echo '1 1' >> $INPUT
 echo '2' >> $GOLDEN
-while ! $DIFF $GOLDEN $OUTPUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
+while ! $DIFF $GOLDEN $STDOUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
 echo -e ' \e[1;32mOK\e[0m'
 
 
@@ -54,7 +56,7 @@ echo -e '\e[1;32mOK\e[0m'
 echo -n 'Testing UNRECOGNIZED via stdin: .'
 echo 'foo' >> $INPUT
 echo 'UNRECOGNIZED' >> $GOLDEN
-while ! $DIFF $GOLDEN $OUTPUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
+while ! $DIFF $GOLDEN $STDOUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
 echo -e ' \e[1;32mOK\e[0m'
 
 
@@ -106,6 +108,27 @@ echo -e '\e[1;32mOK\e[0m'
 
 echo -n 'Confirming /stats reflect two stdin and six GET requests: '
 if ! echo '{"stdin_lines":2,"http_requests":6,"http_requests_by_method":{"GET":6}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
+  echo -e '\e[1;31mFAIL\e[0m'
+  echo STOP >> $INPUT
+  exit 1
+fi
+echo -e '\e[1;32mOK\e[0m'
+
+
+echo -n 'Verifying that Thrift methods have been exported by Ariadner: .'
+echo 'METHODS' >> $INPUT
+while ! echo '["add","post","status","stop"]' | $DIFF - <(tail -n 1 $STDOUT) >/dev/null ; do echo -n . ; sleep 0.2 ; done
+echo -e ' \e[1;32mOK\e[0m'
+
+
+echo -n 'Testing sum() as a call from Ariadne to a Thrift server: .'
+echo 'TESTCALL' >> $INPUT
+while ! echo '{"sum":142}' | $DIFF - <(tail -n 1 $STDOUT) >/dev/null ; do echo -n . ; sleep 0.2 ; done
+echo -e ' \e[1;32mOK\e[0m'
+
+
+echo -n 'Confirming /stats now reflect four stdin and seven GET requests: '
+if ! echo '{"stdin_lines":4,"http_requests":7,"http_requests_by_method":{"GET":7}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
