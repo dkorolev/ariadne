@@ -46,5 +46,6 @@ int main(int argc, char** argv) {
   boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(FLAGS_port));
   boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
   boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+  std::cout << "READY" << std::endl;
   TSimpleServer(processor, serverTransport, transportFactory, protocolFactory).serve();
 }

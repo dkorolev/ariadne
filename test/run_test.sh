@@ -25,8 +25,8 @@ touch $GOLDEN
 
 make
 
-#tail -f $INPUT | node ariadne_client.js --startup_delay_ms 5000 > $OUTPUT &
-tail -f $INPUT | node ariadne_client.js -w $TEST_PORT --startup_delay_ms 0 > $OUTPUT &
+#tail -f $INPUT | node ariadne_client.js -w $TEST_PORT --connect_to_existing > $OUTPUT &
+tail -f $INPUT | node ariadne_client.js -w $TEST_PORT --server_command="c++/cpp_thrift_server" > $OUTPUT &
 CLIENT_PID=$!
 echo 'STARTED' >> $GOLDEN
 while ! $DIFF $GOLDEN $OUTPUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
