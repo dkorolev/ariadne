@@ -31,3 +31,19 @@ A node.js frontend and wrapper for Thrift backends.
 Originally designed to be used with:
 * ```npm install overlog``` log storer and fetcher, and
 * C++ clients based on https://github.com/dkorolev/marvin.
+
+## Example
+
+The minimalistic version of https://github.com/dkorolev/ariadne/blob/master/test/ariadne_client.js.
+
+Will connect to an running server or spawn a new one (use ```--server_command /path/to/my/binary``` or ```--connect_to_existing```) and have its Thrifted methods prefixed with ```ariadne_*``` exported as HTTP endpoints on ```http://localhost:$PORT/ariadne/*```.
+
+```javascript
+require('ariadne').create({
+  thrift: require('./gen-nodejs/API.js'),
+  types: require('./gen-nodejs/api_types.js')
+}.run(function() {
+  console.log('Running.');
+});
+
+```
