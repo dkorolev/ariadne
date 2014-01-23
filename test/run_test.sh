@@ -127,8 +127,18 @@ while ! echo '{"sum":142}' | $DIFF - <(tail -n 1 $STDOUT) >/dev/null ; do echo -
 echo -e ' \e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /stats now reflect four stdin and seven GET requests: '
-if ! echo '{"stdin_lines":4,"http_requests":7,"http_requests_by_method":{"GET":7}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
+echo -n 'Confirming /methods returns the list of Thrift methods exported: '
+if ! echo '{"methods":["add","post","status","stop"]}' | $DIFF - <(curl -s localhost:$TEST_PORT/methods) ; then
+  echo -e '\e[1;31mFAIL\e[0m'
+  echo STOP >> $INPUT
+  exit 1
+fi
+echo -e '\e[1;32mOK\e[0m'
+
+
+
+echo -n 'Confirming /stats now reflect four stdin and eight GET requests: '
+if ! echo '{"stdin_lines":4,"http_requests":8,"http_requests_by_method":{"GET":8}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
