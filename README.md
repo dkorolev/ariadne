@@ -24,6 +24,8 @@ A node.js frontend and wrapper for Thrift backends.
   Makes it easy to beautify the outputs of certain Thrift methods when they need a bit more than formatted JSON with clickable links.
 
 
+**Note:** Only one-parameter Thrift calls are now fully supported. Please refer to the test for more details.
+
 ## Usecase
 
 Originally designed to be used with:

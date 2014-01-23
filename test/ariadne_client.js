@@ -1,3 +1,5 @@
+// Note: Only one-parameter functions returning value are fully supported.
+
 'use strict';
 
 var ariadne = require('../lib/ariadne.js');

@@ -115,7 +115,7 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Verifying that Thrift methods have been exported by Ariadner: .'
+echo -n 'Verifying that Thrift methods have been exported by Ariadne: .'
 echo 'METHODS' >> $INPUT
 while ! echo '["add","post","status","stop"]' | $DIFF - <(tail -n 1 $STDOUT) >/dev/null ; do echo -n . ; sleep 0.2 ; done
 echo -e ' \e[1;32mOK\e[0m'

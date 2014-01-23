@@ -43,6 +43,7 @@
         "commander": "*",
         "underscore": "*",
         "express": "*",
-        "thrift": "*"
+        "thrift": "*",
+        "synchronized": "*"
     }
 }

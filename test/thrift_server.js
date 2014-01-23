@@ -1,3 +1,5 @@
+ // Note: Only one-parameter functions returning value are fully supported. Please see the test.
+
 var thrift = require('thrift');
 
 var AriadneUnitTest = require('./gen-nodejs/AriadneUnitTest.js');
