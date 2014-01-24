@@ -14,5 +14,5 @@ results
 npm-debug.log
 node_modules
 
-test/c++/cpp_thrift_server
+test/c++/binary
 test/c++/gen-cpp/
