@@ -115,12 +115,6 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Verifying that Thrift methods have been exported by Ariadne: .'
-echo 'METHODS' >> $INPUT
-while ! echo '["add","post","status","stop"]' | $DIFF - <(tail -n 1 $STDOUT) >/dev/null ; do echo -n . ; sleep 0.2 ; done
-echo -e ' \e[1;32mOK\e[0m'
-
-
 echo -n 'Testing sum() as a call from Ariadne to a Thrift server: .'
 echo 'TESTCALL' >> $INPUT
 while ! echo '{"sum":142}' | $DIFF - <(tail -n 1 $STDOUT) >/dev/null ; do echo -n . ; sleep 0.2 ; done
@@ -136,8 +130,8 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /stats now reflect four stdin and eight GET requests: '
-if ! echo '{"stdin_lines":4,"http_requests":8,"http_requests_by_method":{"GET":8}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
+echo -n 'Confirming /stats now reflect three stdin and eight GET requests: '
+if ! echo '{"stdin_lines":3,"http_requests":8,"http_requests_by_method":{"GET":8}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1

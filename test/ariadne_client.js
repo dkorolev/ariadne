@@ -40,14 +40,6 @@ server.STDIN_LINE(
 
 server.STDIN_LINE(
   function(line) {
-    if (line.trim().toUpperCase() === 'METHODS') {
-      console.log(JSON.stringify(_.functions(server.methods)));
-      return true;
-    }
-  });
-
-server.STDIN_LINE(
-  function(line) {
     if (line.trim().toUpperCase() === 'TESTCALL') {
       var args = new api.types.AddArguments();
       args.left_hand_side = 100;
