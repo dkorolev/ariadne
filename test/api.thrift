@@ -1,5 +1,4 @@
-// For a C++ test.
-namespace cpp ariadne_unittest
+namespace cpp ariadne_unittest  // For a C++ test.
 
 // ariadne_add(). Adds two numbers.
 struct AddArguments {
@@ -11,29 +10,10 @@ struct AddResult {
   1: i32 sum
 }
 
-// ariadne_post(). Posts a message.
-struct PostArguments {
-  1: string message
-}
-
-struct PostResult {
-  1: i32 count_so_far
-}
-
-// ariadne_status(). Returns "OK" and the last three messages.
-struct Status {
-  1: string status = "OK",
-  2: list<string> recent
-}
-
 // The service itself.
 service AriadneUnitTest {
   // Adds two numbers.
   AddResult ariadne_add(1: AddArguments arguments),
-  // Posts a message.
-  PostResult ariadne_post(1: PostArguments arguments)
-  // Returns three most recent messages.
-  Status ariadne_status(),
   // Stops the server.
   void ariadne_stop()
 }
