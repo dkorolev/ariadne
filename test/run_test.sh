@@ -115,7 +115,7 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Testing sum() as a call from Ariadne to a Thrift server: .'
+echo -n 'Testing add() as via /ariadne/add/ HTTP call proxied to the Thrift server: .'
 if ! echo '{"sum":3}' | $DIFF - <(curl -s "localhost:$TEST_PORT/ariadne/add?_=AddArguments&left_hand_side=1&right_hand_side=2") ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
@@ -124,8 +124,8 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /methods returns the list of Thrift methods exported: '
-if ! echo '{"methods":["add","post","status","stop"]}' | $DIFF - <(curl -s localhost:$TEST_PORT/methods) ; then
+echo -n 'Confirming /ariadne/impl/methods returns the list of Thrift methods exported: '
+if ! echo '{"methods":["add","post","status","stop"]}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/methods) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
