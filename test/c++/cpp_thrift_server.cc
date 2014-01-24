@@ -20,8 +20,8 @@ const int FLAGS_port = 9090;  // Avoid depending on gflags in this test.
 
 class Impl : virtual public AriadneUnitTestIf {
  public:
-  void ariadne_add(AddResult& result, const AddArguments& arguments) {
-    result.sum = arguments.left_hand_side + arguments.right_hand_side;
+  int32_t ariadne_add(const AddArguments& arguments) {
+    return arguments.left_hand_side + arguments.right_hand_side;
   }
 
  private:

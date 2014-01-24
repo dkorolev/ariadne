@@ -7,10 +7,9 @@ var ttypes = require('./gen-nodejs/api_types');
 
 thrift.createServer(AriadneUnitTest, {
   ariadne_add: function(input, output) {
-    var result = new ttypes.AddResult();
-    result.sum = input.left_hand_side + input.right_hand_side;
+    var sum = input.left_hand_side + input.right_hand_side;
     console.log('' + input.left_hand_side + ' + ' + input.right_hand_side + ' = ' + (input.left_hand_side + input.right_hand_side));
-    output(null, result);
+    output(null, sum);
   },
   ariadne_stop: function(output) {
     output(null);

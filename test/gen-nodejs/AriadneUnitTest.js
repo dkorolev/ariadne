@@ -85,9 +85,8 @@ AriadneUnitTest_ariadne_add_result.prototype.read = function(input) {
     switch (fid)
     {
       case 0:
-      if (ftype == Thrift.Type.STRUCT) {
-        this.success = new ttypes.AddResult();
-        this.success.read(input);
+      if (ftype == Thrift.Type.I32) {
+        this.success = input.readI32();
       } else {
         input.skip(ftype);
       }
@@ -107,8 +106,8 @@ AriadneUnitTest_ariadne_add_result.prototype.read = function(input) {
 AriadneUnitTest_ariadne_add_result.prototype.write = function(output) {
   output.writeStructBegin('AriadneUnitTest_ariadne_add_result');
   if (this.success !== null && this.success !== undefined) {
-    output.writeFieldBegin('success', Thrift.Type.STRUCT, 0);
-    this.success.write(output);
+    output.writeFieldBegin('success', Thrift.Type.I32, 0);
+    output.writeI32(this.success);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

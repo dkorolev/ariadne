@@ -6,11 +6,7 @@ struct AddArguments {
   2: i32 right_hand_side,
 }
 
-struct AddResult {
-  1: i32 sum,
-}
-
 // The service itself.
 service AriadneUnitTest {
-  AddResult ariadne_add(1: AddArguments arguments),
+  i32 ariadne_add(1: AddArguments arguments),
 }
