@@ -116,62 +116,6 @@ AriadneUnitTest_ariadne_add_result.prototype.write = function(output) {
   return;
 };
 
-AriadneUnitTest_ariadne_stop_args = function(args) {
-};
-AriadneUnitTest_ariadne_stop_args.prototype = {};
-AriadneUnitTest_ariadne_stop_args.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    input.skip(ftype);
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-AriadneUnitTest_ariadne_stop_args.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_ariadne_stop_args');
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
-AriadneUnitTest_ariadne_stop_result = function(args) {
-};
-AriadneUnitTest_ariadne_stop_result.prototype = {};
-AriadneUnitTest_ariadne_stop_result.prototype.read = function(input) {
-  input.readStructBegin();
-  while (true)
-  {
-    var ret = input.readFieldBegin();
-    var fname = ret.fname;
-    var ftype = ret.ftype;
-    var fid = ret.fid;
-    if (ftype == Thrift.Type.STOP) {
-      break;
-    }
-    input.skip(ftype);
-    input.readFieldEnd();
-  }
-  input.readStructEnd();
-  return;
-};
-
-AriadneUnitTest_ariadne_stop_result.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_ariadne_stop_result');
-  output.writeFieldStop();
-  output.writeStructEnd();
-  return;
-};
-
 AriadneUnitTestClient = exports.Client = function(output, pClass) {
     this.output = output;
     this.pClass = pClass;
@@ -213,36 +157,6 @@ AriadneUnitTestClient.prototype.recv_ariadne_add = function(input,mtype,rseqid) 
   }
   return callback('ariadne_add failed: unknown result');
 };
-AriadneUnitTestClient.prototype.ariadne_stop = function(callback) {
-  this.seqid += 1;
-  this._reqs[this.seqid] = callback;
-  this.send_ariadne_stop();
-};
-
-AriadneUnitTestClient.prototype.send_ariadne_stop = function() {
-  var output = new this.pClass(this.output);
-  output.writeMessageBegin('ariadne_stop', Thrift.MessageType.CALL, this.seqid);
-  var args = new AriadneUnitTest_ariadne_stop_args();
-  args.write(output);
-  output.writeMessageEnd();
-  return this.output.flush();
-};
-
-AriadneUnitTestClient.prototype.recv_ariadne_stop = function(input,mtype,rseqid) {
-  var callback = this._reqs[rseqid] || function() {};
-  delete this._reqs[rseqid];
-  if (mtype == Thrift.MessageType.EXCEPTION) {
-    var x = new Thrift.TApplicationException();
-    x.read(input);
-    input.readMessageEnd();
-    return callback(x);
-  }
-  var result = new AriadneUnitTest_ariadne_stop_result();
-  result.read(input);
-  input.readMessageEnd();
-
-  callback(null)
-};
 AriadneUnitTestProcessor = exports.Processor = function(handler) {
   this._handler = handler
 }
@@ -268,19 +182,6 @@ AriadneUnitTestProcessor.prototype.process_ariadne_add = function(seqid, input, 
   this._handler.ariadne_add(args.arguments, function (err, result) {
     var result = new AriadneUnitTest_ariadne_add_result((err != null ? err : {success: result}));
     output.writeMessageBegin("ariadne_add", Thrift.MessageType.REPLY, seqid);
-    result.write(output);
-    output.writeMessageEnd();
-    output.flush();
-  })
-}
-
-AriadneUnitTestProcessor.prototype.process_ariadne_stop = function(seqid, input, output) {
-  var args = new AriadneUnitTest_ariadne_stop_args();
-  args.read(input);
-  input.readMessageEnd();
-  this._handler.ariadne_stop(function (err, result) {
-    var result = new AriadneUnitTest_ariadne_stop_result((err != null ? err : {success: result}));
-    output.writeMessageBegin("ariadne_stop", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();

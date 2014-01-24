@@ -23,9 +23,6 @@ class Impl : virtual public AriadneUnitTestIf {
   void ariadne_add(AddResult& result, const AddArguments& arguments) {
     result.sum = arguments.left_hand_side + arguments.right_hand_side;
   }
-  void ariadne_stop() {
-    exit(0);
-  }
 
  private:
   std::mutex mutex_;
