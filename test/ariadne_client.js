@@ -38,12 +38,6 @@ server.STDIN_LINE(
     }
   });
 
-server.STDIN_LINE(
-  function(line) {
-    console.log('UNRECOGNIZED');
-    return true;
-  });
-
 server.GET('/demo', function() {
   return {
     test: 'passed',

@@ -53,13 +53,6 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Testing UNRECOGNIZED via stdin: .'
-echo 'foo' >> $INPUT
-echo 'UNRECOGNIZED' >> $GOLDEN
-while ! $DIFF $GOLDEN $STDOUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
-echo -e ' \e[1;32mOK\e[0m'
-
-
 echo -n 'Testing /demo endpoint: '
 if ! echo '{"test":"passed","url":"http://google.com"}' | $DIFF - <(curl -s localhost:$TEST_PORT/demo) ; then
   echo -e '\e[1;31mFAIL\e[0m'
@@ -106,8 +99,8 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /stats reflect two stdin and six GET requests: '
-if ! echo '{"stdin_lines":2,"http_requests":6,"http_requests_by_method":{"GET":6}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
+echo -n 'Confirming /stats reflect one stdin and six GET requests: '
+if ! echo '{"stdin_lines":1,"http_requests":6,"http_requests_by_method":{"GET":6}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -133,8 +126,8 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /stats now reflect two stdin and nine GET requests: '
-if ! echo '{"stdin_lines":2,"http_requests":9,"http_requests_by_method":{"GET":9}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
+echo -n 'Confirming /stats now reflect one stdin and nine GET requests: '
+if ! echo '{"stdin_lines":1,"http_requests":9,"http_requests_by_method":{"GET":9}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
