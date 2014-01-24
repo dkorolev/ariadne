@@ -155,6 +155,12 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
+echo -n 'Measuring performance: .'
+echo 'LOADTEST' >> $INPUT
+while ! tail -n 1 $STDOUT | grep qps >/dev/null ; do echo -n . ; sleep 0.2 ; done
+echo -e ' \e[1;35m'$(tail -n 1 $STDOUT)'\e[0m'
+
+
 echo -n 'Stopping Ariadne client: '
 echo STOP >> $INPUT
 while ps -p $CLIENT_PID >/dev/null ; do sleep 0.2 ; done

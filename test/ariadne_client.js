@@ -44,10 +44,36 @@ server.STDIN_LINE(
       args.before = 'BEFORE';
       args.after = 'AFTER';
       args.left_haand_side = 42;
-      server.methods.loadtest(args, function(error, data) {
-        if (error) throw error;
-        console.log(data);
-      });
+      var start_time_ms = Date.now();
+      var loadtest_duration_ms = 2000;
+      var count = 0;
+      var done = false;
+      var keepGoing = function() {
+        server.methods.loadtest(args, function(error, data) {
+          if (error) throw error;
+          var result = data.split(' ');
+          if (result.length !== 3 || result[0] !== args.before || result[2] !== args.after) {
+            console.error('Test failed.');
+            process.exit(1);
+          }
+          ++count;
+          var ms = Date.now();
+          if (ms >= start_time_ms + loadtest_duration_ms) {
+            if (!done) {
+              done = true;
+              console.log((count / (1e-3 * (ms - start_time_ms))).toFixed(1) + ' qps');
+            }
+          } else {
+            if (true) {
+              keepGoing();
+            } else {
+              // Tested: Results in ~8x less QPS.
+              setTimeout(keepGoing, 0);
+            }
+          }
+        });
+      };
+      keepGoing();
       return true;
     }
   });
