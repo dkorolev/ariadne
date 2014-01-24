@@ -1,4 +1,4 @@
- // Note: Only one-parameter functions returning value are fully supported. Please see the test.
+// Note: Only one-parameter functions returning value are fully supported. Please see the test.
 
 var thrift = require('thrift');
 
@@ -11,14 +11,8 @@ thrift.createServer(AriadneUnitTest, {
     console.log('' + input.left_hand_side + ' + ' + input.right_hand_side + ' = ' + sum);
     output(null, sum);
   },
-  ariadne_stop: function(output) {
-    output(null);
-  },
   ariadne_loadtest: function(input, output) {
     output(null, input.before + ' ' + Date.now() + ' ' + input.after);
-  },
-  ariadne_stop: function(output) {
-    output(null);
   },
 }).listen(9090);
 

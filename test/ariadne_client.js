@@ -37,6 +37,21 @@ server.STDIN_LINE(
     }
   });
 
+server.STDIN_LINE(
+  function(line) {
+    if (line.trim().toUpperCase() === 'LOADTEST') {
+      var args = new api.types.LoadTestArguments();
+      args.before = 'BEFORE';
+      args.after = 'AFTER';
+      args.left_haand_side = 42;
+      server.methods.loadtest(args, function(error, data) {
+        if (error) throw error;
+        console.log(data);
+      });
+      return true;
+    }
+  });
+
 server.GET('/demo', function() {
   return {
     test: 'passed',
