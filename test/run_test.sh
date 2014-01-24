@@ -38,6 +38,7 @@ echo
 echo -n 'Started Ariadne client: '
 echo -e "\e[1;32mPID $CLIENT_PID\e[0m"
 
+
 echo -n 'Testing 1+1 via stdin: .'
 echo '1 1' >> $INPUT
 echo '2' >> $GOLDEN
@@ -45,8 +46,17 @@ while ! $DIFF $GOLDEN $STDOUT >/dev/null ; do echo -n . ; sleep 0.2 ; done
 echo -e ' \e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /stats reflect one stdin and one GET request: '
-if ! echo '{"stdin_lines":1,"http_requests":1,"http_requests_by_method":{"GET":1}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
+echo -n 'Confirming /ariadne/impl/healthz returns OK: '
+if ! echo 'OK' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/healthz) ; then
+  echo -e '\e[1;31mFAIL\e[0m'
+  echo STOP >> $INPUT
+  exit 1
+fi
+echo -e '\e[1;32mOK\e[0m'
+
+
+echo -n 'Confirming /ariadne/impl/stats reflect one stdin and two GET requests: '
+if ! echo '{"ariadne_version":"0.0.4","stats":{"stdin_lines":1,"http_requests":2,"http_requests_by_method":{"GET":2}}}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -78,8 +88,8 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Testing /beauty endpoint: '
-if ! echo '{"beautifier":"unittest","caption":"Beauty","value":42}' | $DIFF - <(curl -s localhost:$TEST_PORT/beauty) ; then
+echo -n 'Testing / endpoint: '
+if ! echo '{"beautifier":"unittest","caption":"Beauty","value":42}' | $DIFF - <(curl -s localhost:$TEST_PORT/) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -87,12 +97,12 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Testing /beauty endpoint in HTML format: '
+echo -n 'Testing / endpoint in HTML format: '
 cat <<EOF >$GOLDEN
 <h1>Beauty</h1>
 <p>42</p>
 EOF
-if ! $DIFF $GOLDEN <(curl -s -H "Accept: text/html" localhost:$TEST_PORT/beauty) ; then
+if ! $DIFF $GOLDEN <(curl -s -H "Accept: text/html" localhost:$TEST_PORT/) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -100,8 +110,8 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /stats reflect one stdin and six GET requests: '
-if ! echo '{"stdin_lines":1,"http_requests":6,"http_requests_by_method":{"GET":6}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
+echo -n 'Confirming /ariadne/impl/stats reflect one stdin and seven GET requests: '
+if ! echo '{"ariadne_version":"0.0.4","stats":{"stdin_lines":1,"http_requests":7,"http_requests_by_method":{"GET":7}}}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -136,8 +146,8 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /stats now reflect one stdin and ten GET requests: '
-if ! echo '{"stdin_lines":1,"http_requests":10,"http_requests_by_method":{"GET":10}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
+echo -n 'Confirming /ariadne/impl/stats now reflect one stdin and eleven GET requests: '
+if ! echo '{"ariadne_version":"0.0.4","stats":{"stdin_lines":1,"http_requests":11,"http_requests_by_method":{"GET":11}}}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1

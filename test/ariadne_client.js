@@ -11,7 +11,6 @@ var api = {
   types: require('./gen-nodejs/api_types.js')
 };
 
-
 process.on('uncaughtException', function(error) {
   console.trace(error);
   process.exit(1);
@@ -21,9 +20,9 @@ var server = ariadne.create(api);
 
 server.STDIN_LINE(
   function(line) {
-    var x = line.match(/^\s*(\d+)\s+(\d+)\s*$/);
-    if (x) {
-      console.log(Number(x[1]) + Number(x[2]));
+    var sum_arguments = line.match(/^\s*(\d+)\s+(\d+)\s*$/);
+    if (sum_arguments) {
+      console.log(Number(sum_arguments[1]) + Number(sum_arguments[2]));
       return true;
     }
   });
@@ -45,7 +44,7 @@ server.GET('/demo', function() {
   }
 });
 
-server.GET('/beauty', function() {
+server.GET('/', function() {
   return {
     beautifier: 'unittest',
     caption: 'Beauty',
