@@ -2,9 +2,10 @@
 #
 # Unit test for Ariadne. Tests parsing input from stdin and HTTP.
 #
-# To run a test against a C++ Thrift backend:
-# (cd c++; make)
-# ./run_test.sh c++/cpp_thrift_server
+# To run a test against a C++ Thrift backend, either run:
+# (cd c++; make) && ./run_test.sh c++/binary
+# or:
+# ./run_both_tests.sh
 
 RUN_SERVER=${1:-node thrift_server.js}
 TEST_PORT=9091
