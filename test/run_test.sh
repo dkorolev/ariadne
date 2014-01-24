@@ -109,6 +109,15 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
+echo -n 'Confirming /ariadne/impl/methods returns the list of Thrift methods exported: '
+if ! echo '{"methods":["add","loadtest"]}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/methods) ; then
+  echo -e '\e[1;31mFAIL\e[0m'
+  echo STOP >> $INPUT
+  exit 1
+fi
+echo -e '\e[1;32mOK\e[0m'
+
+
 echo -n 'Testing add() as via /ariadne/add/ HTTP call proxied to the Thrift server: .'
 if ! echo '3' | $DIFF - <(curl -s "localhost:$TEST_PORT/ariadne/add?_=AddArguments&left_hand_side=1&right_hand_side=2") ; then
   echo -e '\e[1;31mFAIL\e[0m'
@@ -118,8 +127,8 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /ariadne/impl/methods returns the list of Thrift methods exported: '
-if ! echo '{"methods":["add"]}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/methods) ; then
+echo -n 'Testing loadtest() as via /ariadne/loadtest/ HTTP call proxied to the Thrift server: .'
+if ! echo 'foo bar' | $DIFF - <(curl -s "localhost:$TEST_PORT/ariadne/loadtest?_=LoadTestArguments&before=foo&after=bar" | cut -f1,3 -d" ") ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -127,8 +136,8 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /stats now reflect one stdin and nine GET requests: '
-if ! echo '{"stdin_lines":1,"http_requests":9,"http_requests_by_method":{"GET":9}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
+echo -n 'Confirming /stats now reflect one stdin and ten GET requests: '
+if ! echo '{"stdin_lines":1,"http_requests":10,"http_requests_by_method":{"GET":10}}' | $DIFF - <(curl -s localhost:$TEST_PORT/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
