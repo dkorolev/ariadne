@@ -1,3 +1,9 @@
+// Easy ways to run this code:
+// 1) echo PERF_TEST | node ariadne_client.js --server_command "node thrift_server.js"
+// 2) echo ASYNC_TEST | node ariadne_client.js --server_command "node thrift_server.js"
+// 3) (cd c++; make) && echo ASYNC_TEST | node ariadne_client.js --server_command c++/binary
+// 4) ./run_test.sh
+
 // Note: Only one-parameter functions returning value are fully supported.
 
 'use strict';
@@ -5,6 +11,7 @@
 var ariadne = require('../lib/ariadne.js');
 
 var _ = require('underscore');
+var in_words = require('in-words');
 
 var api = {
   thrift: require('./gen-nodejs/AriadneUnitTest.js'),
@@ -39,8 +46,8 @@ server.STDIN_LINE(
 
 server.STDIN_LINE(
   function(line) {
-    if (line.trim().toUpperCase() === 'LOADTEST') {
-      var args = new api.types.LoadTestArguments();
+    if (line.trim().toUpperCase() === 'PERF_TEST') {
+      var args = new api.types.PerfTestArguments();
       args.before = 'BEFORE';
       args.after = 'AFTER';
       args.left_haand_side = 42;
@@ -49,7 +56,7 @@ server.STDIN_LINE(
       var count = 0;
       var done = false;
       var keepGoing = function() {
-        server.methods.loadtest(args, function(error, data) {
+        server.methods.perf_test(args, function(error, data) {
           if (error) throw error;
           var result = data.split(' ');
           if (result.length !== 3 || result[0] !== args.before || result[2] !== args.after) {
@@ -74,6 +81,25 @@ server.STDIN_LINE(
         });
       };
       keepGoing();
+      return true;
+    }
+  });
+
+server.STDIN_LINE(
+  function(line) {
+    if (line.trim().toUpperCase() === 'ASYNC_TEST') {
+      for (var i = 1; i <= 10; ++i) {
+        (function(i) {
+          var args = new api.types.AsyncTestArguments();
+          args.value = in_words.en(i);
+          args.delay_ms = 500 + i * 100;
+          console.log(JSON.stringify(args));
+          console.log(server.methods.async_test(args, function(error, data) {
+            if (error) throw error;
+            console.log(data);
+          }));
+        })(i);
+      }
       return true;
     }
   });

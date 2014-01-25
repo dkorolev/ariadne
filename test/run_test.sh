@@ -120,7 +120,7 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Confirming /ariadne/impl/methods returns the list of Thrift methods exported: '
-if ! echo '{"methods":["add","loadtest"]}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/methods) ; then
+if ! echo '{"methods":["add","async_test","perf_test"],"types":["AddArguments","AsyncTestArguments","PerfTestArguments"]}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/methods) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -137,8 +137,8 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Testing loadtest() as via /ariadne/loadtest/ HTTP call proxied to the Thrift server: .'
-if ! echo 'foo bar' | $DIFF - <(curl -s "localhost:$TEST_PORT/ariadne/loadtest?_=LoadTestArguments&before=foo&after=bar" | cut -f1,3 -d" ") ; then
+echo -n 'Testing perf_test() as via /ariadne/perf_test/ HTTP call proxied to the Thrift server: .'
+if ! echo 'foo bar' | $DIFF - <(curl -s "localhost:$TEST_PORT/ariadne/perf_test?_=PerfTestArguments&before=foo&after=bar" | cut -f1,3 -d" ") ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -147,9 +147,15 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Measuring performance: .'
-echo 'LOADTEST' >> $INPUT
+echo 'PERF_TEST' >> $INPUT
 while ! tail -n 1 $STDOUT | grep qps >/dev/null ; do echo -n . ; sleep 0.2 ; done
 echo -e ' \e[1;35m'$(tail -n 1 $STDOUT)'\e[0m'
+
+
+#echo -n 'Testing asynchronous calls: .'
+#echo 'ASYNC_TEST' >> $INPUT
+#while ! tail -n 1 $STDOUT | grep ASYNC_OK >/dev/null ; do echo -n . ; sleep 0.2 ; done
+#echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Confirming /ariadne/impl/stats now reflect two stdin and eleven GET requests: '

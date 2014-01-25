@@ -44,6 +44,6 @@
     "underscore": "*",
     "express": "*",
     "thrift": "*",
-    "synchronized": "*"
+    "in-words": "*"
   }
 }

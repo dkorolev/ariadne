@@ -72,7 +72,7 @@ AddArguments.prototype.write = function(output) {
   return;
 };
 
-LoadTestArguments = module.exports.LoadTestArguments = function(args) {
+PerfTestArguments = module.exports.PerfTestArguments = function(args) {
   this.before = null;
   this.after = null;
   if (args) {
@@ -84,8 +84,8 @@ LoadTestArguments = module.exports.LoadTestArguments = function(args) {
     }
   }
 };
-LoadTestArguments.prototype = {};
-LoadTestArguments.prototype.read = function(input) {
+PerfTestArguments.prototype = {};
+PerfTestArguments.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -121,8 +121,8 @@ LoadTestArguments.prototype.read = function(input) {
   return;
 };
 
-LoadTestArguments.prototype.write = function(output) {
-  output.writeStructBegin('LoadTestArguments');
+PerfTestArguments.prototype.write = function(output) {
+  output.writeStructBegin('PerfTestArguments');
   if (this.before !== null && this.before !== undefined) {
     output.writeFieldBegin('before', Thrift.Type.STRING, 1);
     output.writeString(this.before);
@@ -131,6 +131,72 @@ LoadTestArguments.prototype.write = function(output) {
   if (this.after !== null && this.after !== undefined) {
     output.writeFieldBegin('after', Thrift.Type.STRING, 2);
     output.writeString(this.after);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AsyncTestArguments = module.exports.AsyncTestArguments = function(args) {
+  this.value = 'OK';
+  this.delay_ms = 500;
+  if (args) {
+    if (args.value !== undefined) {
+      this.value = args.value;
+    }
+    if (args.delay_ms !== undefined) {
+      this.delay_ms = args.delay_ms;
+    }
+  }
+};
+AsyncTestArguments.prototype = {};
+AsyncTestArguments.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRING) {
+        this.value = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I32) {
+        this.delay_ms = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AsyncTestArguments.prototype.write = function(output) {
+  output.writeStructBegin('AsyncTestArguments');
+  if (this.value !== null && this.value !== undefined) {
+    output.writeFieldBegin('value', Thrift.Type.STRING, 1);
+    output.writeString(this.value);
+    output.writeFieldEnd();
+  }
+  if (this.delay_ms !== null && this.delay_ms !== undefined) {
+    output.writeFieldBegin('delay_ms', Thrift.Type.I32, 2);
+    output.writeI32(this.delay_ms);
     output.writeFieldEnd();
   }
   output.writeFieldStop();

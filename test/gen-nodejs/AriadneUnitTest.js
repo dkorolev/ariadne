@@ -115,7 +115,7 @@ AriadneUnitTest_ariadne_add_result.prototype.write = function(output) {
   return;
 };
 
-AriadneUnitTest_ariadne_loadtest_args = function(args) {
+AriadneUnitTest_ariadne_perf_test_args = function(args) {
   this.input = null;
   if (args) {
     if (args.input !== undefined) {
@@ -123,8 +123,8 @@ AriadneUnitTest_ariadne_loadtest_args = function(args) {
     }
   }
 };
-AriadneUnitTest_ariadne_loadtest_args.prototype = {};
-AriadneUnitTest_ariadne_loadtest_args.prototype.read = function(input) {
+AriadneUnitTest_ariadne_perf_test_args.prototype = {};
+AriadneUnitTest_ariadne_perf_test_args.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -139,7 +139,7 @@ AriadneUnitTest_ariadne_loadtest_args.prototype.read = function(input) {
     {
       case 1:
       if (ftype == Thrift.Type.STRUCT) {
-        this.input = new ttypes.LoadTestArguments();
+        this.input = new ttypes.PerfTestArguments();
         this.input.read(input);
       } else {
         input.skip(ftype);
@@ -157,8 +157,8 @@ AriadneUnitTest_ariadne_loadtest_args.prototype.read = function(input) {
   return;
 };
 
-AriadneUnitTest_ariadne_loadtest_args.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_ariadne_loadtest_args');
+AriadneUnitTest_ariadne_perf_test_args.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_perf_test_args');
   if (this.input !== null && this.input !== undefined) {
     output.writeFieldBegin('input', Thrift.Type.STRUCT, 1);
     this.input.write(output);
@@ -169,7 +169,7 @@ AriadneUnitTest_ariadne_loadtest_args.prototype.write = function(output) {
   return;
 };
 
-AriadneUnitTest_ariadne_loadtest_result = function(args) {
+AriadneUnitTest_ariadne_perf_test_result = function(args) {
   this.success = null;
   if (args) {
     if (args.success !== undefined) {
@@ -177,8 +177,8 @@ AriadneUnitTest_ariadne_loadtest_result = function(args) {
     }
   }
 };
-AriadneUnitTest_ariadne_loadtest_result.prototype = {};
-AriadneUnitTest_ariadne_loadtest_result.prototype.read = function(input) {
+AriadneUnitTest_ariadne_perf_test_result.prototype = {};
+AriadneUnitTest_ariadne_perf_test_result.prototype.read = function(input) {
   input.readStructBegin();
   while (true)
   {
@@ -210,8 +210,115 @@ AriadneUnitTest_ariadne_loadtest_result.prototype.read = function(input) {
   return;
 };
 
-AriadneUnitTest_ariadne_loadtest_result.prototype.write = function(output) {
-  output.writeStructBegin('AriadneUnitTest_ariadne_loadtest_result');
+AriadneUnitTest_ariadne_perf_test_result.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_perf_test_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.STRING, 0);
+    output.writeString(this.success);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AriadneUnitTest_ariadne_async_test_args = function(args) {
+  this.input = null;
+  if (args) {
+    if (args.input !== undefined) {
+      this.input = args.input;
+    }
+  }
+};
+AriadneUnitTest_ariadne_async_test_args.prototype = {};
+AriadneUnitTest_ariadne_async_test_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.STRUCT) {
+        this.input = new ttypes.AsyncTestArguments();
+        this.input.read(input);
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AriadneUnitTest_ariadne_async_test_args.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_async_test_args');
+  if (this.input !== null && this.input !== undefined) {
+    output.writeFieldBegin('input', Thrift.Type.STRUCT, 1);
+    this.input.write(output);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AriadneUnitTest_ariadne_async_test_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+AriadneUnitTest_ariadne_async_test_result.prototype = {};
+AriadneUnitTest_ariadne_async_test_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.STRING) {
+        this.success = input.readString();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AriadneUnitTest_ariadne_async_test_result.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_ariadne_async_test_result');
   if (this.success !== null && this.success !== undefined) {
     output.writeFieldBegin('success', Thrift.Type.STRING, 0);
     output.writeString(this.success);
@@ -263,23 +370,23 @@ AriadneUnitTestClient.prototype.recv_ariadne_add = function(input,mtype,rseqid) 
   }
   return callback('ariadne_add failed: unknown result');
 };
-AriadneUnitTestClient.prototype.ariadne_loadtest = function(input, callback) {
+AriadneUnitTestClient.prototype.ariadne_perf_test = function(input, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
-  this.send_ariadne_loadtest(input);
+  this.send_ariadne_perf_test(input);
 };
 
-AriadneUnitTestClient.prototype.send_ariadne_loadtest = function(input) {
+AriadneUnitTestClient.prototype.send_ariadne_perf_test = function(input) {
   var output = new this.pClass(this.output);
-  output.writeMessageBegin('ariadne_loadtest', Thrift.MessageType.CALL, this.seqid);
-  var args = new AriadneUnitTest_ariadne_loadtest_args();
+  output.writeMessageBegin('ariadne_perf_test', Thrift.MessageType.CALL, this.seqid);
+  var args = new AriadneUnitTest_ariadne_perf_test_args();
   args.input = input;
   args.write(output);
   output.writeMessageEnd();
   return this.output.flush();
 };
 
-AriadneUnitTestClient.prototype.recv_ariadne_loadtest = function(input,mtype,rseqid) {
+AriadneUnitTestClient.prototype.recv_ariadne_perf_test = function(input,mtype,rseqid) {
   var callback = this._reqs[rseqid] || function() {};
   delete this._reqs[rseqid];
   if (mtype == Thrift.MessageType.EXCEPTION) {
@@ -288,14 +395,48 @@ AriadneUnitTestClient.prototype.recv_ariadne_loadtest = function(input,mtype,rse
     input.readMessageEnd();
     return callback(x);
   }
-  var result = new AriadneUnitTest_ariadne_loadtest_result();
+  var result = new AriadneUnitTest_ariadne_perf_test_result();
   result.read(input);
   input.readMessageEnd();
 
   if (null !== result.success) {
     return callback(null, result.success);
   }
-  return callback('ariadne_loadtest failed: unknown result');
+  return callback('ariadne_perf_test failed: unknown result');
+};
+AriadneUnitTestClient.prototype.ariadne_async_test = function(input, callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_ariadne_async_test(input);
+};
+
+AriadneUnitTestClient.prototype.send_ariadne_async_test = function(input) {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('ariadne_async_test', Thrift.MessageType.CALL, this.seqid);
+  var args = new AriadneUnitTest_ariadne_async_test_args();
+  args.input = input;
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+AriadneUnitTestClient.prototype.recv_ariadne_async_test = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new AriadneUnitTest_ariadne_async_test_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('ariadne_async_test failed: unknown result');
 };
 AriadneUnitTestProcessor = exports.Processor = function(handler) {
   this._handler = handler
@@ -328,13 +469,26 @@ AriadneUnitTestProcessor.prototype.process_ariadne_add = function(seqid, input, 
   })
 }
 
-AriadneUnitTestProcessor.prototype.process_ariadne_loadtest = function(seqid, input, output) {
-  var args = new AriadneUnitTest_ariadne_loadtest_args();
+AriadneUnitTestProcessor.prototype.process_ariadne_perf_test = function(seqid, input, output) {
+  var args = new AriadneUnitTest_ariadne_perf_test_args();
   args.read(input);
   input.readMessageEnd();
-  this._handler.ariadne_loadtest(args.input, function (err, result) {
-    var result = new AriadneUnitTest_ariadne_loadtest_result((err != null ? err : {success: result}));
-    output.writeMessageBegin("ariadne_loadtest", Thrift.MessageType.REPLY, seqid);
+  this._handler.ariadne_perf_test(args.input, function (err, result) {
+    var result = new AriadneUnitTest_ariadne_perf_test_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("ariadne_perf_test", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
+}
+
+AriadneUnitTestProcessor.prototype.process_ariadne_async_test = function(seqid, input, output) {
+  var args = new AriadneUnitTest_ariadne_async_test_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.ariadne_async_test(args.input, function (err, result) {
+    var result = new AriadneUnitTest_ariadne_async_test_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("ariadne_async_test", Thrift.MessageType.REPLY, seqid);
     result.write(output);
     output.writeMessageEnd();
     output.flush();
