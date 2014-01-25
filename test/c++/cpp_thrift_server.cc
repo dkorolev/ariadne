@@ -1,6 +1,7 @@
 #include "gen-cpp/AriadneUnitTest.h"
 
 #include <chrono>
+#include <thread>
 #include <sstream>
 
 #include <thrift/protocol/TBinaryProtocol.h>
@@ -24,10 +25,15 @@ struct Impl : virtual public AriadneUnitTestIf {
     return arguments.left_hand_side + arguments.right_hand_side;
   }
 
-  void ariadne_loadtest(std::string& output, const LoadTestArguments& input) {
+  void ariadne_perf_test(std::string& output, const PerfTestArguments& input) {
     std::ostringstream os;
     os << input.before << ' ' << date_now() << ' ' << input.after;
     output = os.str();
+  }
+
+  void ariadne_async_test(std::string& output, const AsyncTestArguments& input) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(input.delay_ms));
+    output = input.value;
   }
 };
 

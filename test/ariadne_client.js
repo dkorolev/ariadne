@@ -88,16 +88,33 @@ server.STDIN_LINE(
 server.STDIN_LINE(
   function(line) {
     if (line.trim().toUpperCase() === 'ASYNC_TEST') {
-      for (var i = 1; i <= 10; ++i) {
+      var test_length = 15;
+      var expected_strings = '';
+      for (var i = 1; i <= test_length; ++i) {
+        if (i > 1) {
+          expected_strings += '-';
+        }
+        expected_strings += in_words.en(i);
+      }
+      console.log('EXPECTED: ' + expected_strings);
+      var received_string = '';
+      var received_calls = 0;
+      for (var i = 1; i <= test_length; ++i) {
         (function(i) {
           var args = new api.types.AsyncTestArguments();
           args.value = in_words.en(i);
-          args.delay_ms = 500 + i * 100;
-          console.log(JSON.stringify(args));
-          console.log(server.methods.async_test(args, function(error, data) {
+          args.delay_ms = 10 + (i * 17) % 100;
+          server.methods.async_test(args, function(error, data) {
             if (error) throw error;
-            console.log(data);
-          }));
+            if (received_calls > 0) {
+              received_string += '-';
+            }
+            received_string += data;
+            ++received_calls;
+            if (received_calls === test_length) {
+              console.log('RECEIVED: ' + received_string);
+            }
+          });
         })(i);
       }
       return true;

@@ -152,14 +152,18 @@ while ! tail -n 1 $STDOUT | grep qps >/dev/null ; do echo -n . ; sleep 0.2 ; don
 echo -e ' \e[1;35m'$(tail -n 1 $STDOUT)'\e[0m'
 
 
-#echo -n 'Testing asynchronous calls: .'
-#echo 'ASYNC_TEST' >> $INPUT
-#while ! tail -n 1 $STDOUT | grep ASYNC_OK >/dev/null ; do echo -n . ; sleep 0.2 ; done
-#echo -e '\e[1;32mOK\e[0m'
+echo -n 'Testing asynchronous calls: .'
+echo 'ASYNC_TEST' >> $INPUT
+cat <<EOF >$GOLDEN
+EXPECTED: one-two-three-four-five-six-seven-eight-nine-ten-eleven-twelve-thirteen-fourteen-fifteen
+RECEIVED: one-two-three-four-five-six-seven-eight-nine-ten-eleven-twelve-thirteen-fourteen-fifteen
+EOF
+while ! $DIFF $GOLDEN <(tail -n 2 $STDOUT) >/dev/null ; do echo -n . ; sleep 0.2 ; done
+echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /ariadne/impl/stats now reflect two stdin and eleven GET requests: '
-if ! echo '{"ariadne_version":"0.0.4","stats":{"stdin_lines":2,"http_requests":11,"http_requests_by_method":{"GET":11}}}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
+echo -n 'Confirming /ariadne/impl/stats now reflect three stdin and eleven GET requests: '
+if ! echo '{"ariadne_version":"0.0.4","stats":{"stdin_lines":3,"http_requests":11,"http_requests_by_method":{"GET":11}}}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
