@@ -128,7 +128,7 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Testing add() as via /ariadne/add/ HTTP call proxied to the Thrift server: .'
+echo -n 'Testing add() via /ariadne/add/ HTTP call proxied to the Thrift server: .'
 if ! echo '3' | $DIFF - <(curl -s "localhost:$TEST_PORT/ariadne/add?_=AddArguments&left_hand_side=1&right_hand_side=2") ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
@@ -137,7 +137,7 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Testing perf_test() as via /ariadne/perf_test/ HTTP call proxied to the Thrift server: .'
+echo -n 'Testing perf_test() via /ariadne/perf_test/ HTTP call proxied to the Thrift server: .'
 if ! echo 'foo bar' | $DIFF - <(curl -s "localhost:$TEST_PORT/ariadne/perf_test?_=PerfTestArguments&before=foo&after=bar" | cut -f1,3 -d" ") ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
