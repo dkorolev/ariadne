@@ -5,7 +5,7 @@
 # To run a test against a C++ Thrift backend, either run:
 # (cd c++; make) && ./run_test.sh c++/binary
 # or:
-# ./run_both_tests.sh
+# ./run_node_and_native_tests.sh
 
 RUN_SERVER=${1:-node thrift_server.js}
 THRIFT_PORT=9190
@@ -70,7 +70,7 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Confirming /ariadne/impl/stats reflect one stdin and three GET requests: '
-if ! echo '{"ariadne_version":"0.0.5","stats":{"stdin_lines":1,"http_requests":3,"http_requests_by_method":{"GET":3}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
+if ! echo '{"ariadne_version":"0.0.6","stats":{"stdin_lines":1,"http_requests":3,"http_requests_by_method":{"GET":3}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -125,7 +125,7 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Confirming /ariadne/impl/stats reflect one stdin and eight GET requests: '
-if ! echo '{"ariadne_version":"0.0.5","stats":{"stdin_lines":1,"http_requests":8,"http_requests_by_method":{"GET":8}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
+if ! echo '{"ariadne_version":"0.0.6","stats":{"stdin_lines":1,"http_requests":8,"http_requests_by_method":{"GET":8}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -177,7 +177,7 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Confirming /ariadne/impl/stats now reflect three stdin and twelve GET requests: '
-if ! echo '{"ariadne_version":"0.0.5","stats":{"stdin_lines":3,"http_requests":12,"http_requests_by_method":{"GET":12}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
+if ! echo '{"ariadne_version":"0.0.6","stats":{"stdin_lines":3,"http_requests":12,"http_requests_by_method":{"GET":12}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
