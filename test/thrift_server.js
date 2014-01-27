@@ -21,6 +21,9 @@ require('thrift').createServer(require('./gen-nodejs/AriadneUnitTest.js'), {
       output(null, input.value);
     }, input.delay_ms);
   },
+  healthz: function(output) {
+    output(null, 1);
+  },
 }).listen(thrift_port).on('listening', function() {
   console.log('Thrift: listening on port ' + thrift_port);
   console.log('READY');

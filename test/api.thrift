@@ -16,6 +16,7 @@ struct AsyncTestArguments {
 }
 
 service AriadneUnitTest {
+  i32 healthz(),
   i32 ariadne_add(1: AddArguments arguments),
   string ariadne_perf_test(1: PerfTestArguments input),
   string ariadne_async_test(1: AsyncTestArguments input),

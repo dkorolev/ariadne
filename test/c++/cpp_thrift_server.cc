@@ -23,6 +23,8 @@ int64_t date_now() {
 }
 
 struct Impl : virtual public AriadneUnitTestIf {
+  int32_t healthz() { return 1; }
+
   int32_t ariadne_add(const AddArguments& arguments) {
     return arguments.left_hand_side + arguments.right_hand_side;
   }

@@ -8,6 +8,87 @@ var Thrift = require('thrift').Thrift;
 var ttypes = require('./api_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
+AriadneUnitTest_healthz_args = function(args) {
+};
+AriadneUnitTest_healthz_args.prototype = {};
+AriadneUnitTest_healthz_args.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    input.skip(ftype);
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AriadneUnitTest_healthz_args.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_healthz_args');
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AriadneUnitTest_healthz_result = function(args) {
+  this.success = null;
+  if (args) {
+    if (args.success !== undefined) {
+      this.success = args.success;
+    }
+  }
+};
+AriadneUnitTest_healthz_result.prototype = {};
+AriadneUnitTest_healthz_result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+      if (ftype == Thrift.Type.I32) {
+        this.success = input.readI32();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AriadneUnitTest_healthz_result.prototype.write = function(output) {
+  output.writeStructBegin('AriadneUnitTest_healthz_result');
+  if (this.success !== null && this.success !== undefined) {
+    output.writeFieldBegin('success', Thrift.Type.I32, 0);
+    output.writeI32(this.success);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 AriadneUnitTest_ariadne_add_args = function(args) {
   this.arguments = null;
   if (args) {
@@ -336,6 +417,39 @@ AriadneUnitTestClient = exports.Client = function(output, pClass) {
     this._reqs = {};
 };
 AriadneUnitTestClient.prototype = {};
+AriadneUnitTestClient.prototype.healthz = function(callback) {
+  this.seqid += 1;
+  this._reqs[this.seqid] = callback;
+  this.send_healthz();
+};
+
+AriadneUnitTestClient.prototype.send_healthz = function() {
+  var output = new this.pClass(this.output);
+  output.writeMessageBegin('healthz', Thrift.MessageType.CALL, this.seqid);
+  var args = new AriadneUnitTest_healthz_args();
+  args.write(output);
+  output.writeMessageEnd();
+  return this.output.flush();
+};
+
+AriadneUnitTestClient.prototype.recv_healthz = function(input,mtype,rseqid) {
+  var callback = this._reqs[rseqid] || function() {};
+  delete this._reqs[rseqid];
+  if (mtype == Thrift.MessageType.EXCEPTION) {
+    var x = new Thrift.TApplicationException();
+    x.read(input);
+    input.readMessageEnd();
+    return callback(x);
+  }
+  var result = new AriadneUnitTest_healthz_result();
+  result.read(input);
+  input.readMessageEnd();
+
+  if (null !== result.success) {
+    return callback(null, result.success);
+  }
+  return callback('healthz failed: unknown result');
+};
 AriadneUnitTestClient.prototype.ariadne_add = function(arguments, callback) {
   this.seqid += 1;
   this._reqs[this.seqid] = callback;
@@ -454,6 +568,19 @@ AriadneUnitTestProcessor.prototype.process = function(input, output) {
     output.writeMessageEnd();
     output.flush();
   }
+}
+
+AriadneUnitTestProcessor.prototype.process_healthz = function(seqid, input, output) {
+  var args = new AriadneUnitTest_healthz_args();
+  args.read(input);
+  input.readMessageEnd();
+  this._handler.healthz(function (err, result) {
+    var result = new AriadneUnitTest_healthz_result((err != null ? err : {success: result}));
+    output.writeMessageBegin("healthz", Thrift.MessageType.REPLY, seqid);
+    result.write(output);
+    output.writeMessageEnd();
+    output.flush();
+  })
 }
 
 AriadneUnitTestProcessor.prototype.process_ariadne_add = function(seqid, input, output) {
