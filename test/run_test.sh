@@ -60,8 +60,17 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /ariadne/impl/stats reflect one stdin and two GET requests: '
-if ! echo '{"ariadne_version":"0.0.4","stats":{"stdin_lines":1,"http_requests":2,"http_requests_by_method":{"GET":2}}}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
+echo -n 'Confirming /ariadne/impl/thrift_server_healthz returns THRIFT_SERVER_OK: '
+if ! echo 'THRIFT_SERVER_OK' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/thrift_server_healthz) ; then
+  echo -e '\e[1;31mFAIL\e[0m'
+  echo STOP >> $INPUT
+  exit 1
+fi
+echo -e '\e[1;32mOK\e[0m'
+
+
+echo -n 'Confirming /ariadne/impl/stats reflect one stdin and three GET requests: '
+if ! echo '{"ariadne_version":"0.0.5","stats":{"stdin_lines":1,"http_requests":3,"http_requests_by_method":{"GET":3}}}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -115,8 +124,8 @@ fi
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /ariadne/impl/stats reflect one stdin and seven GET requests: '
-if ! echo '{"ariadne_version":"0.0.4","stats":{"stdin_lines":1,"http_requests":7,"http_requests_by_method":{"GET":7}}}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
+echo -n 'Confirming /ariadne/impl/stats reflect one stdin and eight GET requests: '
+if ! echo '{"ariadne_version":"0.0.5","stats":{"stdin_lines":1,"http_requests":8,"http_requests_by_method":{"GET":8}}}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -125,7 +134,7 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Confirming /ariadne/impl/methods returns the list of Thrift methods exported: '
-if ! echo '{"methods":["add","async_test","perf_test"],"types":["AddArguments","AsyncTestArguments","PerfTestArguments"]}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/methods) ; then
+if ! echo '{"methods":["_healthz","add","async_test","perf_test"],"types":["AddArguments","AsyncTestArguments","PerfTestArguments"]}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/methods) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -167,8 +176,8 @@ while ! $DIFF $GOLDEN <(tail -n 2 $STDOUT) >/dev/null ; do echo -n . ; sleep 0.2
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /ariadne/impl/stats now reflect three stdin and eleven GET requests: '
-if ! echo '{"ariadne_version":"0.0.4","stats":{"stdin_lines":3,"http_requests":11,"http_requests_by_method":{"GET":11}}}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
+echo -n 'Confirming /ariadne/impl/stats now reflect three stdin and twelve GET requests: '
+if ! echo '{"ariadne_version":"0.0.5","stats":{"stdin_lines":3,"http_requests":12,"http_requests_by_method":{"GET":12}}}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
