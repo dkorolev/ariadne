@@ -30,7 +30,8 @@ touch $STDOUT
 touch $STDERR
 touch $GOLDEN
 
-make
+(cd .. ; make) || exit 1  # npm install/update if necessary.
+make || exit 1  # autogenerate Thrift code if necessary.
 
 tail -f $INPUT | node ariadne_client.js -w $TEST_PORT -p $THRIFT_PORT --server_command="$RUN_SERVER" >$STDOUT 2>$STDERR &
 CLIENT_PID=$!
