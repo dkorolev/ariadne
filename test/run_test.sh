@@ -8,7 +8,11 @@
 # ./run_both_tests.sh
 
 RUN_SERVER=${1:-node thrift_server.js}
+THRIFT_PORT=9190
 TEST_PORT=9091
+
+RUN_SERVER+=" --thrift_port=$THRIFT_PORT"
+
 echo -e "Server command: \e[1;34m$RUN_SERVER\e[0m"
 
 TMPDIR=$(mktemp -d)
@@ -28,7 +32,7 @@ touch $GOLDEN
 
 make
 
-tail -f $INPUT | node ariadne_client.js -w $TEST_PORT --server_command="$RUN_SERVER" >$STDOUT 2>$STDERR &
+tail -f $INPUT | node ariadne_client.js -w $TEST_PORT -p $THRIFT_PORT --server_command="$RUN_SERVER" >$STDOUT 2>$STDERR &
 CLIENT_PID=$!
 
 echo 'STARTED' >> $GOLDEN

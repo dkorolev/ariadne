@@ -9,6 +9,8 @@
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TBufferTransports.h>
 
+#include <gflags/gflags.h>
+
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
 using namespace ::apache::thrift::transport;
@@ -37,11 +39,15 @@ struct Impl : virtual public AriadneUnitTestIf {
   }
 };
 
+DEFINE_int32(thrift_port, 9090, "The port to spawn the Thrift server on.");
+
 int main(int argc, char** argv) {
-  const int FLAGS_port = 9090;  // Avoid depending on gflags in this test.
+  if (!google::ParseCommandLineFlags(&argc, &argv, true)) {
+    return -1;
+  }
   boost::shared_ptr<Impl> handler(new Impl());
   boost::shared_ptr<TProcessor> processor(new AriadneUnitTestProcessor(handler));
-  boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(FLAGS_port));
+  boost::shared_ptr<TServerTransport> serverTransport(new TServerSocket(FLAGS_thrift_port));
   boost::shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
   boost::shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
   std::cout << "READY" << std::endl;
