@@ -9,7 +9,7 @@
 
 RUN_SERVER=${1:-node thrift_server.js}
 THRIFT_PORT=9190
-TEST_PORT=9091
+TEST_PORT=9191
 
 RUN_SERVER+=" --thrift_port=$THRIFT_PORT"
 
