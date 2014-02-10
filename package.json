@@ -36,7 +36,7 @@
   ],
   "main": "lib/ariadne.js",
   "scripts": {
-    "test": "(cd test; ./run_test.sh)"
+    "test": "node_modules/mocha/bin/mocha test/mocha/*.js && (cd test; ./run_test.sh)"
   },
   "dependencies": {
     "step": "*",
@@ -44,6 +44,9 @@
     "underscore": "*",
     "express": "*",
     "thrift": "*",
-    "in-words": "*"
+    "in-words": "*",
+    "mocha": "*",
+    "supertest": "*",
+    "should": "*"
   }
 }
