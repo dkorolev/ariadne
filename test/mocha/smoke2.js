@@ -1,5 +1,5 @@
-// Note: This test is just a quick check that Ariadne code can be tested with Mocha.
-// The actual testing code is in the shell test.
+// A copy of smoke.js.
+// To test that Ariadne server is teared down properly: Releases the ports and allows for the new one to start.
 
 'use strict';
 

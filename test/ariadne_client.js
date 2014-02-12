@@ -145,7 +145,7 @@ module.exports.run = function(flags, user_callback) {
   });
 
   server.run(function() {
-    user_callback(server.express);
+    user_callback(server);
   });
 };
 
