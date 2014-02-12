@@ -148,7 +148,7 @@ if ! echo '3' | $DIFF - <(curl -s "localhost:$TEST_PORT/ariadne/add?_=AddArgumen
   echo STOP >> $INPUT
   exit 1
 fi
-echo -e '\e[1;32mOK\e[0m'
+echo -e ' \e[1;32mOK\e[0m'
 
 
 echo -n 'Testing perf_test() via /ariadne/perf_test/ HTTP call proxied to the Thrift server: .'
@@ -157,7 +157,7 @@ if ! echo 'foo bar' | $DIFF - <(curl -s "localhost:$TEST_PORT/ariadne/perf_test?
   echo STOP >> $INPUT
   exit 1
 fi
-echo -e '\e[1;32mOK\e[0m'
+echo -e ' \e[1;32mOK\e[0m'
 
 
 echo -n 'Measuring performance: .'
