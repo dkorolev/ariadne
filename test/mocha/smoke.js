@@ -61,6 +61,16 @@ describe('Smoke test.', function() {
         done();
       });
   });
+  it('/ariadne/add_int64 (int64 formatting)', function(done) {
+    request(ariadne.express)
+      .get('/ariadne/add_int64?_=AddInt64Arguments&i64_left_hand_side=1000000000001&i64_right_hand_side=1000000000002')
+      .expect(200)
+      .end(function(error, result) {
+        if (error) throw error;
+        result.text.should.equal('{"i64_result":2000000000003}');
+        done();
+      });
+  });
   it('Tears Down', function(done) {
     ariadne.tearDown(function() {
       done();

@@ -1,5 +1,9 @@
 // Note: Only one-parameter functions returning value are fully supported. Please see the test.
 
+var ariadne = require('../lib/ariadne.js');
+
+var types = require('./gen-nodejs/api_types.js');
+
 var commander = require('commander');
 commander.option('--thrift_port [port]', 'The port to spawn the test server on.');
 commander.parse(process.argv);
@@ -21,6 +25,14 @@ require('thrift').createServer(require('./gen-nodejs/AriadneUnitTest.js'), {
     var sum = input.left_hand_side + input.right_hand_side;
     console.log('' + input.left_hand_side + ' + ' + input.right_hand_side + ' = ' + sum);
     output(null, sum);
+  },
+  ariadne_add_int64: function(input, output) {
+    last_alive_time = Date.now();
+    var sum = input.i64_left_hand_side + input.i64_right_hand_side;
+    console.log('I64' + input.left_hand_side + ' + ' + input.right_hand_side + ' = ' + sum);
+    var result = new types.AddInt64Result();
+    result.i64_result = sum;
+    output(null, ariadne.int64_ify(result));
   },
   ariadne_perf_test: function(input, output) {
     last_alive_time = Date.now();

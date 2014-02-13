@@ -44,6 +44,7 @@
     "underscore": "*",
     "express": "*",
     "thrift": "*",
+    "node-int64": "*",
     "in-words": "*",
     "mocha": "*",
     "supertest": "*",

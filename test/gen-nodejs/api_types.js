@@ -72,6 +72,125 @@ AddArguments.prototype.write = function(output) {
   return;
 };
 
+AddInt64Arguments = module.exports.AddInt64Arguments = function(args) {
+  this.i64_left_hand_side = null;
+  this.i64_right_hand_side = null;
+  if (args) {
+    if (args.i64_left_hand_side !== undefined) {
+      this.i64_left_hand_side = args.i64_left_hand_side;
+    }
+    if (args.i64_right_hand_side !== undefined) {
+      this.i64_right_hand_side = args.i64_right_hand_side;
+    }
+  }
+};
+AddInt64Arguments.prototype = {};
+AddInt64Arguments.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.i64_left_hand_side = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 2:
+      if (ftype == Thrift.Type.I64) {
+        this.i64_right_hand_side = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AddInt64Arguments.prototype.write = function(output) {
+  output.writeStructBegin('AddInt64Arguments');
+  if (this.i64_left_hand_side !== null && this.i64_left_hand_side !== undefined) {
+    output.writeFieldBegin('i64_left_hand_side', Thrift.Type.I64, 1);
+    output.writeI64(this.i64_left_hand_side);
+    output.writeFieldEnd();
+  }
+  if (this.i64_right_hand_side !== null && this.i64_right_hand_side !== undefined) {
+    output.writeFieldBegin('i64_right_hand_side', Thrift.Type.I64, 2);
+    output.writeI64(this.i64_right_hand_side);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
+AddInt64Result = module.exports.AddInt64Result = function(args) {
+  this.i64_result = null;
+  if (args) {
+    if (args.i64_result !== undefined) {
+      this.i64_result = args.i64_result;
+    }
+  }
+};
+AddInt64Result.prototype = {};
+AddInt64Result.prototype.read = function(input) {
+  input.readStructBegin();
+  while (true)
+  {
+    var ret = input.readFieldBegin();
+    var fname = ret.fname;
+    var ftype = ret.ftype;
+    var fid = ret.fid;
+    if (ftype == Thrift.Type.STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+      if (ftype == Thrift.Type.I64) {
+        this.i64_result = input.readI64();
+      } else {
+        input.skip(ftype);
+      }
+      break;
+      case 0:
+        input.skip(ftype);
+        break;
+      default:
+        input.skip(ftype);
+    }
+    input.readFieldEnd();
+  }
+  input.readStructEnd();
+  return;
+};
+
+AddInt64Result.prototype.write = function(output) {
+  output.writeStructBegin('AddInt64Result');
+  if (this.i64_result !== null && this.i64_result !== undefined) {
+    output.writeFieldBegin('i64_result', Thrift.Type.I64, 1);
+    output.writeI64(this.i64_result);
+    output.writeFieldEnd();
+  }
+  output.writeFieldStop();
+  output.writeStructEnd();
+  return;
+};
+
 PerfTestArguments = module.exports.PerfTestArguments = function(args) {
   this.before = null;
   this.after = null;

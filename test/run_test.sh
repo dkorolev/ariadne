@@ -134,7 +134,7 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Confirming /ariadne/impl/methods returns the list of Thrift methods exported: '
-if ! echo '{"methods":["_healthz","add","async_test","perf_test"],"types":["AddArguments","AsyncTestArguments","PerfTestArguments"]}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/methods) ; then
+if ! echo '{"methods":["_healthz","add","add_int64","async_test","perf_test"],"types":["AddArguments","AddInt64Arguments","AddInt64Result","AsyncTestArguments","PerfTestArguments"]}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/methods) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -144,6 +144,15 @@ echo -e '\e[1;32mOK\e[0m'
 
 echo -n 'Testing add() via /ariadne/add/ HTTP call proxied to the Thrift server: .'
 if ! echo '3' | $DIFF - <(curl -s "localhost:$TEST_PORT/ariadne/add?_=AddArguments&left_hand_side=1&right_hand_side=2") ; then
+  echo -e '\e[1;31mFAIL\e[0m'
+  echo STOP >> $INPUT
+  exit 1
+fi
+echo -e ' \e[1;32mOK\e[0m'
+
+
+echo -n 'Testing add_int64() via /ariadne/add_int64/ HTTP call proxied to the Thrift server: .'
+if ! echo '{"i64_result":2000000000003}' | $DIFF - <(curl -s "localhost:$TEST_PORT/ariadne/add_int64?_=AddInt64Arguments&i64_left_hand_side=1000000000001&i64_right_hand_side=1000000000002") ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -176,8 +185,8 @@ while ! $DIFF $GOLDEN <(tail -n 2 $STDOUT) >/dev/null ; do echo -n . ; sleep 0.2
 echo -e '\e[1;32mOK\e[0m'
 
 
-echo -n 'Confirming /ariadne/impl/stats now reflect three stdin and twelve GET requests: '
-if ! echo '{"ariadne_version":"0.0.9","stats":{"stdin_lines":3,"http_requests":12,"http_requests_by_method":{"GET":12}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
+echo -n 'Confirming /ariadne/impl/stats now reflect three stdin and thirteen GET requests: '
+if ! echo '{"ariadne_version":"0.0.9","stats":{"stdin_lines":3,"http_requests":13,"http_requests_by_method":{"GET":13}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
