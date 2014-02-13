@@ -70,7 +70,7 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Confirming /ariadne/impl/stats reflect one stdin and three GET requests: '
-if ! echo '{"ariadne_version":"0.0.9","stats":{"stdin_lines":1,"http_requests":3,"http_requests_by_method":{"GET":3}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
+if ! echo '{"ariadne_version":"0.1.0","stats":{"stdin_lines":1,"http_requests":3,"http_requests_by_method":{"GET":3}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -125,7 +125,7 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Confirming /ariadne/impl/stats reflect one stdin and eight GET requests: '
-if ! echo '{"ariadne_version":"0.0.9","stats":{"stdin_lines":1,"http_requests":8,"http_requests_by_method":{"GET":8}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
+if ! echo '{"ariadne_version":"0.1.0","stats":{"stdin_lines":1,"http_requests":8,"http_requests_by_method":{"GET":8}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
@@ -186,7 +186,7 @@ echo -e '\e[1;32mOK\e[0m'
 
 
 echo -n 'Confirming /ariadne/impl/stats now reflect three stdin and thirteen GET requests: '
-if ! echo '{"ariadne_version":"0.0.9","stats":{"stdin_lines":3,"http_requests":13,"http_requests_by_method":{"GET":13}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
+if ! echo '{"ariadne_version":"0.1.0","stats":{"stdin_lines":3,"http_requests":13,"http_requests_by_method":{"GET":13}},"buffered_entries_count":0}' | $DIFF - <(curl -s localhost:$TEST_PORT/ariadne/impl/stats) ; then
   echo -e '\e[1;31mFAIL\e[0m'
   echo STOP >> $INPUT
   exit 1
