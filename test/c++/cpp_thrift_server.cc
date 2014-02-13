@@ -29,6 +29,10 @@ struct Impl : virtual public AriadneUnitTestIf {
     return arguments.left_hand_side + arguments.right_hand_side;
   }
 
+  void ariadne_add_int64(AddInt64Result& result, const ariadne_unittest::AddInt64Arguments& arguments) {
+    result.i64_result = arguments.i64_left_hand_side + arguments.i64_right_hand_side;
+  }
+
   void ariadne_perf_test(std::string& output, const PerfTestArguments& input) {
     std::ostringstream os;
     os << input.before << ' ' << date_now() << ' ' << input.after;
