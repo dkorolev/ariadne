@@ -22,11 +22,7 @@ module.exports.run = function(flags, user_callback) {
     types: require('./gen-nodejs/api_types.js')
   };
 
-  process.setMaxListeners(0);
-  process.on('uncaughtException', function(error) {
-    console.trace(error);
-    process.exit(1);
-  });
+  require('./singleton_catch_exceptions.js');
 
   var server = ariadne.create(api, flags);
 
