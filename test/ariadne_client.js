@@ -22,6 +22,7 @@ module.exports.run = function(flags, user_callback) {
     types: require('./gen-nodejs/api_types.js')
   };
 
+  process.setMaxListeners(0);
   process.on('uncaughtException', function(error) {
     console.trace(error);
     process.exit(1);
