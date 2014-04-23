@@ -1,6 +1,6 @@
 {
   "name": "ariadne",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A node.js frontend wrapper for Thrift backends.",
   "homepage": "https://github.com/dkorolev/ariadne",
   "repository": {
@@ -43,6 +43,7 @@
     "commander": "*",
     "underscore": "*",
     "express": "*",
+    "body-parser": "*",
     "thrift": "*",
     "node-int64": "*",
     "in-words": "*",
